@@ -12,6 +12,7 @@
 
 var express = require("express");
 var path = require("path");
+const dataService = require("./data-service.js"); // link data-service.js
 var app = express();
 
 var HTTP_PORT = process.env.PORT || 8080;
@@ -29,6 +30,28 @@ app.get("/", function(req,res){
 // setup another route to listen on /about
 app.get("/about", function(req,res){
    res.sendFile(path.join(__dirname + "/views/about.html"));
+});
+
+// setup a route to /employees
+app.get("/employees", (req, res) => {
+    if(req.query.status) {
+        res.json({message: req.query.status});
+    }else if(req.query.manager) {
+        res.json({message: req.query.manager});
+    }else if(req.query.department) {
+        res.json({message: req.query.department});
+    }else {
+        dataService.getMessage().then((dataMessage) => {
+            res.json({message: dataMessage});
+        }).catch((errorMessage) => {
+            res.json({message: errorMessage});
+        }); 
+    }
+});
+
+// setup route to /employee/value
+app.get("/employee/:empNum", (req,res) => {
+  res.json({message: req.params.empNum})
 });
 
 // used for css implimentation - to be discussed in class at later date
