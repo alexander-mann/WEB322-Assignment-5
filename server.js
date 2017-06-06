@@ -23,35 +23,49 @@ function onHttpStart() {
 }
 
 // setup a 'route' to listen on the default url path (http://localhost)
-app.get("/", function(req,res){
-   res.sendFile(path.join(__dirname + "/views/home.html"));
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname + "/views/home.html"));
 });
 
 // setup another route to listen on /about
-app.get("/about", function(req,res){
-   res.sendFile(path.join(__dirname + "/views/about.html"));
+app.get("/about", function (req, res) {
+  res.sendFile(path.join(__dirname + "/views/about.html"));
 });
 
 // setup a route to /employees
 app.get("/employees", (req, res) => {
-    if(req.query.status) {
-        res.json({message: req.query.status});
-    }else if(req.query.manager) {
-        res.json({message: req.query.manager});
-    }else if(req.query.department) {
-        res.json({message: req.query.department});
-    }else {
-        dataService.getMessage().then((dataMessage) => {
-            res.json({message: dataMessage});
-        }).catch((errorMessage) => {
-            res.json({message: errorMessage});
-        }); 
-    }
+  if (req.query.status) {
+    res.json({ message: req.query.status });
+  } else if (req.query.manager) {
+    res.json({ message: req.query.manager });
+  } else if (req.query.department) {
+    res.json({ message: req.query.department });
+  } else {
+    dataService.getMessage().then((dataMessage) => {
+      res.json({ message: dataMessage });
+    }).catch((errorMessage) => {
+      res.json({ message: errorMessage });
+    });
+  }
 });
 
 // setup route to /employee/value
-app.get("/employee/:empNum", (req,res) => {
-  res.json({message: req.params.empNum})
+app.get("/employee/:empNum", (req, res) => {
+  res.json({ message: req.params.empNum });
+});
+
+// setup route to /managers
+app.get("/managers", (req, res) => {
+  if (req.query.isManager = true) {
+    res.json({message: req.query.manager });
+  }
+});
+
+// setup route to /departments
+
+// setup route to 'no matching route'
+app.use((req, res) => {
+  res.status(404).send("Page Not Found");
 });
 
 // used for css implimentation - to be discussed in class at later date
