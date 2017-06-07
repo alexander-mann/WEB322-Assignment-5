@@ -56,12 +56,17 @@ app.get("/employee/:empNum", (req, res) => {
 
 // setup route to /managers
 app.get("/managers", (req, res) => {
-  if (req.query.isManager = true) {
-    res.json({message: req.query.manager });
+  if (req.query.manager) {
+    res.json({ message: req.query.manager });
   }
 });
 
 // setup route to /departments
+app.get("/departments", (req,res) => {
+  if (req.query.department) {
+    res.json({ message: req.query.manager })
+  }
+});
 
 // setup route to 'no matching route'
 app.use((req, res) => {
