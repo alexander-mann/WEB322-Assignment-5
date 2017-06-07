@@ -1,0 +1,3 @@
+var employees = [];
+var departments = [];
+
