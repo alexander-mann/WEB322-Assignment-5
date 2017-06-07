@@ -81,6 +81,6 @@ dataService.initialize()
 .then(() => {
   app.listen(HTTP_PORT, onHttpStart);
 })
-.catch(() => {
+.catch((err) => {
   console.log(err);
 });
