@@ -77,4 +77,10 @@ app.use((req, res) => {
 app.use(express.static('public'));
 
 // setup http server to listen on HTTP_PORT
-app.listen(HTTP_PORT, onHttpStart);
+dataService.initialize()
+.then(() => {
+  app.listen(HTTP_PORT, onHttpStart);
+})
+.catch(() => {
+  console.log(err);
+});
