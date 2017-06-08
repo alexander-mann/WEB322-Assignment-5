@@ -35,6 +35,7 @@ app.get("/about", function (req, res) {
 // set up route to /employees - populate employee data
 app.get("/employees", (req, res) => {
   if (req.query.status) {
+    console.log("-getEmployeesByStatus called"); // test //
     dataService.getEmployeesByStatus(req.query.status)
       .then((data) => {
         console.log("-getEmployeesByStatus resolved"); // test //
@@ -44,8 +45,17 @@ app.get("/employees", (req, res) => {
         console.log(err);
       })
   } else if (req.query.manager) {
-    console.log("manager");
+    console.log("-getEmployeesByManager called"); // test //
+    dataService.getEmployeesByManager(req.query.manager)
+      .then((data) => {
+        console.log("-getEmployeesByManager resolved"); // test //
+        res.json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   } else if (req.query.department) {
+    console.log("-getEmployeesByDepartment called"); // test //
     dataService.getEmployeesByDepartment(req.query.department)
       .then((data) => {
         console.log("-getEmployeesByDepartment resolved"); // test //
@@ -55,6 +65,7 @@ app.get("/employees", (req, res) => {
         console.log(err);
       })
   } else {
+    console.log("-getAllEmployees called"); // test //
     dataService.getAllEmployees()
       .then((data) => {
         console.log("-getAllEmployees resolved"); // test //
@@ -68,7 +79,15 @@ app.get("/employees", (req, res) => {
 
 // setup route to /employee/value
 app.get("/employee/:empNum", (req, res) => {
-  res.json({ message: req.params.empNum });
+  console.log("-getEmployeeByNum called"); // test //
+  dataService.getEmployeeByNum(req.params.empNum)
+    .then((data) => {
+      console.log("-getEmployeeByNum resolved"); // test //
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
 });
 
 // setup route to /managers
