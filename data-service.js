@@ -22,6 +22,7 @@ module.exports.initialize = () => {
                     }
                     else {
                         departments = JSON.parse(data);
+                        // console.log(departments); // test
                         resolve("Initialization Successful");
                     }
                 });
@@ -32,10 +33,7 @@ module.exports.initialize = () => {
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION: GET ALL EMPLOYEES
 module.exports.getAllEmployees = () => {
-    // console.log("Length: " + employees.length) // = 280
-    // console.log(employees); // test
     return new Promise((resolve, reject) => {
-        // console.log("Length: " + employees.length) // = 280
         if(employees.length == 0) {
             reject("No Employee Data Found");
         }
@@ -50,7 +48,6 @@ module.exports.getAllEmployees = () => {
 // FUNCTION: GET ALL EMPLOYEES BY STATUS
 module.exports.getEmployeesByStatus = (status) => {
     var empStatus = []; // temp array to hold results
-   //  console.log(empStatus.length); // test
     for(let i = 0; i < employees.length; i++) {
         if(employees[i].status == status) {
             empStatus.push(employees[i]);
@@ -70,7 +67,6 @@ module.exports.getEmployeesByStatus = (status) => {
 // FUNCTION: GET ALL EMPLOYEES BY DEPARTMENT
 module.exports.getEmployeesByDepartment = (department) => {
     var empDept = []; // temp array to hold results
-    // console.log(empDept.length); // test
     for(let i = 0; i < employees.length; i++) {
         if(employees[i].department == department) {
             empDept.push(employees[i]);
