@@ -34,28 +34,36 @@ app.get("/about", function (req, res) {
 
 // set up route to /employees - populate employee data
 app.get("/employees", (req, res) => {
-  console.log("** /employees called **"); // test //
-  dataService.getAllEmployees()
-    .then((data) => {
-      console.log("** getAllEmployees resolved **"); // test //
-      res.json(data);
-      if (req.query.status) {
-        dataService.getEmployeesByStatus(req.query.status)
-          .then((data) => {
-            res.json(data);
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      } else if (req.query.manager) {
-        res.json({ message: req.query.manager });
-      } else if (req.query.department) {
-        res.json({ message: req.query.department });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (req.query.status) {
+    dataService.getEmployeesByStatus(req.query.status)
+      .then((data) => {
+        console.log("** getEmployeesByStatus resolved **"); // test //
+        res.json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  } else if (req.query.manager) {
+    console.log("manager");
+  } else if (req.query.department) {
+    dataService.getEmployeesByDepartment(req.query.department)
+      .then((data) => {
+        console.log("** getEmployeesByDepartment resolved **"); // test //
+        res.json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  } else {
+    dataService.getAllEmployees()
+      .then((data) => {
+        console.log("** getAllEmployees resolved **"); // test //
+        res.json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 });
 
 // setup route to /employee/value
@@ -88,6 +96,7 @@ app.use(express.static('public'));
 // setup http server to listen on HTTP_PORT
 dataService.initialize()
   .then(() => {
+    console.log("** initialize resolved **"); // test //
     app.listen(HTTP_PORT, onHttpStart);
   })
   .catch((err) => {

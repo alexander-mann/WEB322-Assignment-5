@@ -6,7 +6,7 @@ var departments = [];
 // INCLUDE FS - FILE SYSTEM
 const fs = require('fs');
 ////////////////////////////////////////////////////////////////////////////////
-// INITALIZE FUNCTION
+// FUNCTION: POPULATE DATA INTO GLOBAL ARRAYS
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
         fs.readFile('./data/employees.json', (err, data) => {
@@ -30,7 +30,7 @@ module.exports.initialize = () => {
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
-// GET ALL EMPLOYEES FUNCTION
+// FUNCTION: GET ALL EMPLOYEES
 module.exports.getAllEmployees = () => {
     // console.log("Length: " + employees.length) // = 280
     // console.log(employees); // test
@@ -40,31 +40,50 @@ module.exports.getAllEmployees = () => {
             reject("No Employee Data Found");
         }
         else {
-            // console.log("Length: " + employees.length) // = 0
+            console.log("Array length: " + employees.length) // = 0
             // console.log(employees); // test
             resolve(employees);
         }
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
-// GET EMPLOYEES BY STATUS FUNCTION
+// FUNCTION: GET ALL EMPLOYEES BY STATUS
 module.exports.getEmployeesByStatus = (status) => {
     var empStatus = []; // temp array to hold results
+    console.log(empStatus.length); // test
     for(let i = 0; i < employees.length; i++) {
-        if(employee[i].status = status) {
-            empStatus += employee[i];
+        if(employees[i].status == status) {
+            empStatus.push(employees[i]);
         }
     }
     return new Promise((resolve, reject) => {
-        if(empStatus.length = 0) {
+        if(empStatus.length == 0) {
             reject("No Matching Results Found");
         }
         else {
-            resolve();
-            return empStatus;
+            console.log("Array length: " + empStatus.length); // test
+            resolve(empStatus);
         }
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
-
+// FUNCTION: GET ALL EMPLOYEES BY DEPARTMENT
+module.exports.getEmployeesByDepartment = (department) => {
+    var empDept = []; // temp array to hold results
+    console.log(empDept.length); // test
+    for(let i = 0; i < employees.length; i++) {
+        if(employees[i].department == department) {
+            empDept.push(employees[i]);
+        }
+    }
+    return new Promise((resolve, reject) => {
+        if(empDept.length == 0) {
+            reject("No Matching Results Found");
+        }
+        else {
+            console.log("Array length: " + empDept.length); // test
+            resolve(empDept);
+        }
+    });
+};
 ////////////////////////////////////////////////////////////////////////////////
