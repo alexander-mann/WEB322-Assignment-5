@@ -40,7 +40,7 @@ module.exports.getAllEmployees = () => {
             reject("No Employee Data Found");
         }
         else {
-            console.log("All Employees: " + employees.length) // = 0
+            console.log("All Employees: " + employees.length) // test
             // console.log(employees); // test
             resolve(employees);
         }
