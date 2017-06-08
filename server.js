@@ -34,8 +34,10 @@ app.get("/about", function (req, res) {
 
 // set up route to /employees - populate employee data
 app.get("/employees", (req, res) => {
+  console.log("** /employees called **"); // test //
   dataService.getAllEmployees()
     .then((data) => {
+      console.log("** getAllEmployees resolved **"); // test //
       res.json(data);
       if (req.query.status) {
         dataService.getEmployeesByStatus(req.query.status)

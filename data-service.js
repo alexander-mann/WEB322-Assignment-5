@@ -15,6 +15,7 @@ module.exports.initialize = () => {
             }
             else {
                 employees = JSON.parse(data);
+                // console.log(employees); // test
                 fs.readFile('./data/departments.json', (err, data) => {
                     if(err) {
                         reject("Initialization Error - Department Data");
@@ -31,13 +32,17 @@ module.exports.initialize = () => {
 ////////////////////////////////////////////////////////////////////////////////
 // GET ALL EMPLOYEES FUNCTION
 module.exports.getAllEmployees = () => {
+    // console.log("Length: " + employees.length) // = 280
+    // console.log(employees); // test
     return new Promise((resolve, reject) => {
-        if(employees.length = 0) {
+        // console.log("Length: " + employees.length) // = 280
+        if(employees.length == 0) {
             reject("No Employee Data Found");
         }
         else {
-            resolve();
-            return employees;
+            // console.log("Length: " + employees.length) // = 0
+            // console.log(employees); // test
+            resolve(employees);
         }
     });
 };
