@@ -40,7 +40,7 @@ module.exports.getAllEmployees = () => {
             reject("No Employee Data Found");
         }
         else {
-            console.log("Array length: " + employees.length) // = 0
+            console.log("All Employees: " + employees.length) // = 0
             // console.log(employees); // test
             resolve(employees);
         }
@@ -50,7 +50,7 @@ module.exports.getAllEmployees = () => {
 // FUNCTION: GET ALL EMPLOYEES BY STATUS
 module.exports.getEmployeesByStatus = (status) => {
     var empStatus = []; // temp array to hold results
-    console.log(empStatus.length); // test
+   //  console.log(empStatus.length); // test
     for(let i = 0; i < employees.length; i++) {
         if(employees[i].status == status) {
             empStatus.push(employees[i]);
@@ -61,7 +61,7 @@ module.exports.getEmployeesByStatus = (status) => {
             reject("No Matching Results Found");
         }
         else {
-            console.log("Array length: " + empStatus.length); // test
+            console.log(status + " Employees: " + empStatus.length); // test
             resolve(empStatus);
         }
     });
@@ -70,7 +70,7 @@ module.exports.getEmployeesByStatus = (status) => {
 // FUNCTION: GET ALL EMPLOYEES BY DEPARTMENT
 module.exports.getEmployeesByDepartment = (department) => {
     var empDept = []; // temp array to hold results
-    console.log(empDept.length); // test
+    // console.log(empDept.length); // test
     for(let i = 0; i < employees.length; i++) {
         if(employees[i].department == department) {
             empDept.push(employees[i]);
@@ -81,9 +81,11 @@ module.exports.getEmployeesByDepartment = (department) => {
             reject("No Matching Results Found");
         }
         else {
-            console.log("Array length: " + empDept.length); // test
+            console.log("Employees in Department " + department + ": " + empDept.length); // test
             resolve(empDept);
         }
     });
 };
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: GET ALL EMPLOYEES BY
 ////////////////////////////////////////////////////////////////////////////////

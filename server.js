@@ -37,7 +37,7 @@ app.get("/employees", (req, res) => {
   if (req.query.status) {
     dataService.getEmployeesByStatus(req.query.status)
       .then((data) => {
-        console.log("** getEmployeesByStatus resolved **"); // test //
+        console.log("-getEmployeesByStatus resolved"); // test //
         res.json(data);
       })
       .catch((err) => {
@@ -48,7 +48,7 @@ app.get("/employees", (req, res) => {
   } else if (req.query.department) {
     dataService.getEmployeesByDepartment(req.query.department)
       .then((data) => {
-        console.log("** getEmployeesByDepartment resolved **"); // test //
+        console.log("-getEmployeesByDepartment resolved"); // test //
         res.json(data);
       })
       .catch((err) => {
@@ -57,7 +57,7 @@ app.get("/employees", (req, res) => {
   } else {
     dataService.getAllEmployees()
       .then((data) => {
-        console.log("** getAllEmployees resolved **"); // test //
+        console.log("-getAllEmployees resolved"); // test //
         res.json(data);
       })
       .catch((err) => {
@@ -96,7 +96,7 @@ app.use(express.static('public'));
 // setup http server to listen on HTTP_PORT
 dataService.initialize()
   .then(() => {
-    console.log("** initialize resolved **"); // test //
+    console.log("-initialize resolved"); // test //
     app.listen(HTTP_PORT, onHttpStart);
   })
   .catch((err) => {
