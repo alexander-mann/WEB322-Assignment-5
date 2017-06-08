@@ -42,6 +42,7 @@ app.get("/employees", (req, res) => {
         res.json(data);
       })
       .catch((err) => {
+        res.json(err);
         console.log(err);
       })
   } else if (req.query.manager) {
@@ -62,6 +63,7 @@ app.get("/employees", (req, res) => {
         res.json(data);
       })
       .catch((err) => {
+        res.json(err);
         console.log(err);
       })
   } else {
@@ -72,6 +74,7 @@ app.get("/employees", (req, res) => {
         res.json(data);
       })
       .catch((err) => {
+        res.json(err);
         console.log(err);
       })
   }
@@ -86,6 +89,7 @@ app.get("/employee/:empNum", (req, res) => {
       res.json(data);
     })
     .catch((err) => {
+      res.json(err);
       console.log(err);
     })
 });
@@ -93,7 +97,7 @@ app.get("/employee/:empNum", (req, res) => {
 // setup route to /managers
 app.get("/managers", (req, res) => {
   if (req.query.manager) {
-    res.json({ message: req.query.manager });
+    res.json("{ message: req.query.manager }");
   }
 });
 
@@ -114,11 +118,12 @@ app.use(express.static('public'));
 
 // setup http server to listen on HTTP_PORT
 dataService.initialize()
-  .then(() => {
-    console.log("-initialize resolved"); // test //
+  .then((data) => {
+    console.log("-initialization successful"); // test //
     app.listen(HTTP_PORT, onHttpStart);
   })
   .catch((err) => {
+    res.json(err);
     console.log(err);
   });
 

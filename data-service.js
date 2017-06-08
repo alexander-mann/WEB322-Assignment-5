@@ -114,11 +114,31 @@ module.exports.getEmployeeByNum = (num) => {
     }
     return new Promise((resolve, reject) => {
         if(emp.length == 0) {
-            reject("No Matching Results Found");
+            reject("No Employee with ID " + num + " Found");
         }
         else {
             console.log("Employee with ID " + num + " = " + emp.firstName + " " + emp.last_name); // test
             resolve(emp);
+        }
+    });
+};
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: GET MANAGERS
+////////////////////////////////////////////////////////////////////////////////
+module.exports.getManagers = () => {
+    let mngrs = []; // temp array to hold results
+    for(let i = 0; i < employees.length; i++) {
+        if(employees[i].isManager == true) {
+            mngrs.push(employees[i]);
+        }
+    }
+    return new Promise((resolve, reject) => {
+        if(mngrs.length == 0) {
+            reject("No Managers Found");
+        }
+        else {
+            console.log("Managers = " + mngrs.length); // test
+            resolve(mngrs);
         }
     });
 };
