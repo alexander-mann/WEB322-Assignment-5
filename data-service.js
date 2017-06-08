@@ -36,8 +36,30 @@ module.exports.getAllEmployees = () => {
             reject("No Employee Data Found");
         }
         else {
+            resolve();
             return employees;
         }
     });
 };
+////////////////////////////////////////////////////////////////////////////////
+// GET EMPLOYEES BY STATUS FUNCTION
+module.exports.getEmployeesByStatus = (status) => {
+    var empStatus = []; // temp array to hold results
+    for(let i = 0; i < employees.length; i++) {
+        if(employee[i].status = status) {
+            empStatus += employee[i];
+        }
+    }
+    return new Promise((resolve, reject) => {
+        if(empStatus.length = 0) {
+            reject("No Matching Results Found");
+        }
+        else {
+            resolve();
+            return empStatus;
+        }
+    });
+};
+////////////////////////////////////////////////////////////////////////////////
+
 ////////////////////////////////////////////////////////////////////////////////

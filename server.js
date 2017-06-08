@@ -32,21 +32,28 @@ app.get("/about", function (req, res) {
   res.sendFile(path.join(__dirname + "/views/about.html"));
 });
 
-// setup a route to /employees
+// set up route to /employees - populate employee data
 app.get("/employees", (req, res) => {
-  if (req.query.status) {
-    res.json({ message: req.query.status });
-  } else if (req.query.manager) {
-    res.json({ message: req.query.manager });
-  } else if (req.query.department) {
-    res.json({ message: req.query.department });
-  } else {
-    dataService.getMessage().then((dataMessage) => {
-      res.json({ message: dataMessage });
-    }).catch((errorMessage) => {
-      res.json({ message: errorMessage });
+  dataService.getAllEmployees()
+    .then((data) => {
+      res.json(data);
+      if (req.query.status) {
+        dataService.getEmployeesByStatus(req.query.status)
+          .then((data) => {
+            res.json(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      } else if (req.query.manager) {
+        res.json({ message: req.query.manager });
+      } else if (req.query.department) {
+        res.json({ message: req.query.department });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  }
 });
 
 // setup route to /employee/value
@@ -62,7 +69,7 @@ app.get("/managers", (req, res) => {
 });
 
 // setup route to /departments
-app.get("/departments", (req,res) => {
+app.get("/departments", (req, res) => {
   if (req.query.department) {
     res.json({ message: req.query.manager })
   }
@@ -78,9 +85,10 @@ app.use(express.static('public'));
 
 // setup http server to listen on HTTP_PORT
 dataService.initialize()
-.then(() => {
-  app.listen(HTTP_PORT, onHttpStart);
-})
-.catch((err) => {
-  console.log(err);
-});
+  .then(() => {
+    app.listen(HTTP_PORT, onHttpStart);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
