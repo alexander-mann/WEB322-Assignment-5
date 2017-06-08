@@ -42,6 +42,7 @@ app.get("/employees", (req, res) => {
         res.json(data);
       })
       .catch((err) => {
+        console.log("-getEmployeesByStatus rejected"); // test //
         res.json(err);
         console.log(err);
       })
@@ -53,6 +54,8 @@ app.get("/employees", (req, res) => {
         res.json(data);
       })
       .catch((err) => {
+        console.log("-getEmployeesByManager rejected"); // test //
+        res.json(err);
         console.log(err);
       })
   } else if (req.query.department) {
@@ -63,6 +66,7 @@ app.get("/employees", (req, res) => {
         res.json(data);
       })
       .catch((err) => {
+        console.log("-getEmployeesByDepartment rejected"); // test //
         res.json(err);
         console.log(err);
       })
@@ -74,6 +78,7 @@ app.get("/employees", (req, res) => {
         res.json(data);
       })
       .catch((err) => {
+        console.log("-getAllEmployees rejected"); // test //
         res.json(err);
         console.log(err);
       })
@@ -89,6 +94,7 @@ app.get("/employee/:empNum", (req, res) => {
       res.json(data);
     })
     .catch((err) => {
+      console.log("-getEmployeeByNum rejected"); // test //
       res.json(err);
       console.log(err);
     })
@@ -123,6 +129,7 @@ dataService.initialize()
     app.listen(HTTP_PORT, onHttpStart);
   })
   .catch((err) => {
+    console.log("-initialization failed"); // test //
     res.json(err);
     console.log(err);
   });
