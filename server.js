@@ -6,7 +6,7 @@
 *
 * Name: Alexander Mann Student ID: 131-632-168 Date: May 23, 2017
 *
-* Online (Heroku) Link: https://amann9-assign3.herokuapp.com/
+* Online (Heroku) Link: https://amann9-project.herokuapp.com/
 *
 ********************************************************************************/
 
