@@ -142,7 +142,7 @@ module.exports.getManagers = () => {
             reject("No Managers Found");
         }
         else {
-            console.log("Managers = " + mngrs.length); // test
+            console.log("All Managers = " + mngrs.length); // test
             resolve(mngrs);
         }
     });
@@ -161,3 +161,4 @@ module.exports.getDepartments = () => {
         }
     });
 };
+////////////////////////////////////////////////////////////////////////////////
