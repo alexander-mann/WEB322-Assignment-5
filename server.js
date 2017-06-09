@@ -22,6 +22,9 @@ function onHttpStart() {
   console.log("Express http server listening on: " + HTTP_PORT);
 }
 
+// used for css implimentation - to be discussed in class at later date
+app.use(express.static('public'));
+
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname + "/views/home.html"));
@@ -134,9 +137,6 @@ app.get("/departments", (req, res) => {
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
 });
-
-// used for css implimentation - to be discussed in class at later date
-app.use(express.static('public'));
 
 // setup http server to listen on HTTP_PORT
 dataService.initialize()
