@@ -1,12 +1,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 // ARRAYS FOR DATA STORAGE
+////////////////////////////////////////////////////////////////////////////////
 var employees = [];
 var departments = [];
 ////////////////////////////////////////////////////////////////////////////////
 // INCLUDE FS - FILE SYSTEM
+////////////////////////////////////////////////////////////////////////////////
 const fs = require('fs');
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION: POPULATE DATA INTO GLOBAL ARRAYS
+////////////////////////////////////////////////////////////////////////////////
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
         fs.readFile('./data/employees.json', (err, data) => {
@@ -32,6 +35,7 @@ module.exports.initialize = () => {
 };
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION: GET ALL EMPLOYEES
+////////////////////////////////////////////////////////////////////////////////
 module.exports.getAllEmployees = () => {
     return new Promise((resolve, reject) => {
         if(employees.length == 0) {
@@ -39,13 +43,13 @@ module.exports.getAllEmployees = () => {
         }
         else {
             console.log("All Employees = " + employees.length) // test
-            // console.log(employees); // test
             resolve(employees);
         }
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION: GET ALL EMPLOYEES BY STATUS
+////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeesByStatus = (status) => {
     let empStatus = []; // temp array to hold results
     for(let i = 0; i < employees.length; i++) {
@@ -65,6 +69,7 @@ module.exports.getEmployeesByStatus = (status) => {
 };
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION: GET ALL EMPLOYEES BY DEPARTMENT
+////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeesByDepartment = (department) => {
     let empDept = []; // temp array to hold results
     for(let i = 0; i < employees.length; i++) {
@@ -139,6 +144,20 @@ module.exports.getManagers = () => {
         else {
             console.log("Managers = " + mngrs.length); // test
             resolve(mngrs);
+        }
+    });
+};
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: GET ALL DEPARTMENTS
+////////////////////////////////////////////////////////////////////////////////
+module.exports.getDepartments = () => {
+    return new Promise((resolve, reject) => {
+        if(departments.length == 0) {
+            reject("No Department Data Found");
+        }
+        else {
+            console.log("All Departments = " + departments.length) // test
+            resolve(departments);
         }
     });
 };

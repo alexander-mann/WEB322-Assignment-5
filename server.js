@@ -102,16 +102,32 @@ app.get("/employee/:empNum", (req, res) => {
 
 // setup route to /managers
 app.get("/managers", (req, res) => {
-  if (req.query.manager) {
-    res.json("{ message: req.query.manager }");
-  }
+    console.log("-getManagers called"); // test //
+  dataService.getManagers()
+    .then((data) => {
+      console.log("-getManagers resolved"); // test //
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log("-getManagers rejected"); // test //
+      res.json(err);
+      console.log(err);
+    })
 });
 
 // setup route to /departments
 app.get("/departments", (req, res) => {
-  if (req.query.department) {
-    res.json({ message: req.query.manager })
-  }
+  console.log("-getDepartments called"); // test //
+  dataService.getDepartments()
+    .then((data) => {
+      console.log("-getDepartments resolved"); // test //
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log("-getDepartments rejected"); // test //
+      res.json(err);
+      console.log(err);
+    })
 });
 
 // setup route to 'no matching route'
