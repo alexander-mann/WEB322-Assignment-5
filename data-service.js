@@ -38,11 +38,11 @@ module.exports.initialize = () => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getAllEmployees = () => {
     return new Promise((resolve, reject) => {
-        if(employees.length == 0) {
+        if(employees.length === 0) {
             reject("No Employee Data Found");
         }
         else {
-            console.log("All Employees = " + employees.length) // test
+            console.log("All Employees = " + employees.length); // test
             resolve(employees);
         }
     });
@@ -58,7 +58,7 @@ module.exports.getEmployeesByStatus = (status) => {
         }
     }
     return new Promise((resolve, reject) => {
-        if(empStatus.length == 0) {
+        if(empStatus.length === 0) {
             reject("No Matching Results Found");
         }
         else {
@@ -78,7 +78,7 @@ module.exports.getEmployeesByDepartment = (department) => {
         }
     }
     return new Promise((resolve, reject) => {
-        if(empDept.length == 0) {
+        if(empDept.length === 0) {
             reject("No Matching Results Found");
         }
         else {
@@ -98,7 +98,7 @@ module.exports.getEmployeesByManager = (manager) => {
         }
     }
     return new Promise((resolve, reject) => {
-        if(empMngr.length == 0) {
+        if(empMngr.length === 0) {
             reject("No Matching Results Found");
         }
         else {
@@ -118,7 +118,7 @@ module.exports.getEmployeeByNum = (num) => {
         }
     }
     return new Promise((resolve, reject) => {
-        if(emp.length == 0) {
+        if(emp.length === 0) {
             reject("No Employee with ID " + num + " Found");
         }
         else {
@@ -133,12 +133,12 @@ module.exports.getEmployeeByNum = (num) => {
 module.exports.getManagers = () => {
     let mngrs = []; // temp array to hold results
     for(let i = 0; i < employees.length; i++) {
-        if(employees[i].isManager == true) {
+        if(employees[i].isManager === true) {
             mngrs.push(employees[i]);
         }
     }
     return new Promise((resolve, reject) => {
-        if(mngrs.length == 0) {
+        if(mngrs.length === 0) {
             reject("No Managers Found");
         }
         else {
@@ -152,11 +152,11 @@ module.exports.getManagers = () => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getDepartments = () => {
     return new Promise((resolve, reject) => {
-        if(departments.length == 0) {
+        if(departments.length === 0) {
             reject("No Department Data Found");
         }
         else {
-            console.log("All Departments = " + departments.length) // test
+            console.log("All Departments = " + departments.length); // test
             resolve(departments);
         }
     });

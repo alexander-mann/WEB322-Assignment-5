@@ -48,7 +48,7 @@ app.get("/employees", (req, res) => {
         res.json(err);
         console.log(err);
         console.log("-getEmployeesByStatus rejected"); // test //
-      })
+      });
   } else if (req.query.manager) {
     console.log("-getEmployeesByManager called"); // test //
     dataService.getEmployeesByManager(req.query.manager)
@@ -60,7 +60,7 @@ app.get("/employees", (req, res) => {
         res.json(err);
         console.log(err);
         console.log("-getEmployeesByManager rejected"); // test //
-      })
+      });
   } else if (req.query.department) {
     console.log("-getEmployeesByDepartment called"); // test //
     dataService.getEmployeesByDepartment(req.query.department)
@@ -72,7 +72,7 @@ app.get("/employees", (req, res) => {
         res.json(err);
         console.log(err);
         console.log("-getEmployeesByDepartment rejected"); // test //
-      })
+      });
   } else {
     console.log("-getAllEmployees called"); // test //
     dataService.getAllEmployees()
@@ -84,7 +84,7 @@ app.get("/employees", (req, res) => {
         res.json(err);
         console.log(err);
         console.log("-getAllEmployees rejected"); // test //
-      })
+      });
   }
 });
 
@@ -100,7 +100,7 @@ app.get("/employee/:empNum", (req, res) => {
       res.json(err);
       console.log(err);
       console.log("-getEmployeeByNum rejected"); // test //
-    })
+    });
 });
 
 // setup route to /managers
@@ -115,7 +115,7 @@ app.get("/managers", (req, res) => {
       res.json(err);
       console.log(err);
       console.log("-getManagers rejected"); // test //
-    })
+    });
 });
 
 // setup route to /departments
@@ -130,7 +130,7 @@ app.get("/departments", (req, res) => {
       res.json(err);
       console.log(err);
       console.log("-getDepartments rejected"); // test //
-    })
+    });
 });
 
 // setup route to 'no matching route'
