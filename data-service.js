@@ -82,7 +82,7 @@ module.exports.getEmployeesByDepartment = (department) => {
             reject("No Matching Results Found");
         }
         else {
-            console.log("Employees in Department " + department + "= " + empDept.length); // test
+            console.log("Employees in Department " + department + " = " + empDept.length); // test
             resolve(empDept);
         }
     });
@@ -102,7 +102,7 @@ module.exports.getEmployeesByManager = (manager) => {
             reject("No Matching Results Found");
         }
         else {
-            console.log("Employees with Manager " + manager + "= " + empMngr.length); // test
+            console.log("Employees with Manager " + manager + " = " + empMngr.length); // test
             resolve(empMngr);
         }
     });
