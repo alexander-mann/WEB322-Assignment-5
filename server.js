@@ -154,6 +154,16 @@ app.get("/departments", (req, res) => {
     });
 });
 
+// setup route to /employees/add
+app.get("/employees/add", (req, res) => {
+  res.render("addEmployee");
+});
+
+// setup route to post new data
+app.post("/employees/add", (req, res) => { 
+  console.log(req.body); res.redirect("/employees"); 
+});
+
 // setup route to 'no matching route'
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
