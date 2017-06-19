@@ -63,10 +63,10 @@ app.get("/employees", (req, res) => {
     dataService.getEmployeesByStatus(req.query.status)
       .then((data) => {
         console.log("-getEmployeesByStatus resolved"); // test //
-        res.json(data);
+        res.render("employeeList", { data: data, title: "Employees" });
       })
       .catch((err) => {
-        res.json(err);
+        res.render("employeeList", { data: {}, title: "Employees" });
         console.log(err);
         console.log("-getEmployeesByStatus rejected"); // test //
       });
@@ -75,10 +75,10 @@ app.get("/employees", (req, res) => {
     dataService.getEmployeesByManager(req.query.manager)
       .then((data) => {
         console.log("-getEmployeesByManager resolved"); // test //
-        res.json(data);
+        res.render("employeeList", { data: data, title: "Employees" });
       })
       .catch((err) => {
-        res.json(err);
+        res.render("employeeList", { data: {}, title: "Employees" });
         console.log(err);
         console.log("-getEmployeesByManager rejected"); // test //
       });
@@ -87,10 +87,10 @@ app.get("/employees", (req, res) => {
     dataService.getEmployeesByDepartment(req.query.department)
       .then((data) => {
         console.log("-getEmployeesByDepartment resolved"); // test //
-        res.json(data);
+        res.render("employeeList", { data: data, title: "Employees" });
       })
       .catch((err) => {
-        res.json(err);
+        res.render("employeeList", { data: {}, title: "Employees" });
         console.log(err);
         console.log("-getEmployeesByDepartment rejected"); // test //
       });
@@ -99,10 +99,10 @@ app.get("/employees", (req, res) => {
     dataService.getAllEmployees()
       .then((data) => {
         console.log("-getAllEmployees resolved"); // test //
-        res.json(data);
+        res.render("employeeList", { data: data, title: "Employees" });
       })
       .catch((err) => {
-        res.json(err);
+        res.render("employeeList", { data: {}, title: "Employees" });
         console.log(err);
         console.log("-getAllEmployees rejected"); // test //
       });
@@ -130,10 +130,10 @@ app.get("/managers", (req, res) => {
   dataService.getManagers()
     .then((data) => {
       console.log("-getManagers resolved"); // test //
-      res.json(data);
+      res.render("employeeList", { data: data, title: "Employees (Managers)" });
     })
     .catch((err) => {
-      res.json(err);
+      res.render("employeeList", { data: {}, title: "Employees (Managers)" });
       console.log(err);
       console.log("-getManagers rejected"); // test //
     });
@@ -145,10 +145,10 @@ app.get("/departments", (req, res) => {
   dataService.getDepartments()
     .then((data) => {
       console.log("-getDepartments resolved"); // test //
-      res.json(data);
+      res.render("departmentList", { data: data, title: "Departments" });
     })
     .catch((err) => {
-      res.json(err);
+      res.render("departmentList", { data: {}, title: "Departments" });
       console.log(err);
       console.log("-getDepartments rejected"); // test //
     });
