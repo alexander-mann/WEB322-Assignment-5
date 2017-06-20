@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 var employees = [];
 var departments = [];
+var empCount = 0;
 ////////////////////////////////////////////////////////////////////////////////
 // INCLUDE FS - FILE SYSTEM
 ////////////////////////////////////////////////////////////////////////////////
@@ -19,6 +20,7 @@ module.exports.initialize = () => {
             else {
                 employees = JSON.parse(data);
                 // console.log(employees); // test
+                empCount = employees.length; // set employee count
                 fs.readFile('./data/departments.json', (err, data) => {
                     if(err) {
                         reject("Initialization Error - Department Data");
@@ -160,5 +162,11 @@ module.exports.getDepartments = () => {
             resolve(departments);
         }
     });
+};
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: ADD NEW EMPLOYEE
+////////////////////////////////////////////////////////////////////////////////
+module.exports.addEmployee = (employeeData) => {
+    
 };
 ////////////////////////////////////////////////////////////////////////////////
