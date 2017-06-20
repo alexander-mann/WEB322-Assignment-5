@@ -174,7 +174,6 @@ module.exports.addEmployee = (employeeData) => {
         employees[employees.length].employeeNum = empCount;
         // assign new employee to array
         employees[employees.length] = employeeData;
-        // print out new employee data
         // console.log(employees[employees.length]); // test
         if(employees[employees.length].employeeManagerNum != employeeData.employeeManagerNum) {
             reject("Employee Was Not Added Successfully");
