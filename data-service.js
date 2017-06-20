@@ -172,6 +172,7 @@ module.exports.addEmployee = (employeeData) => {
         empCount++;
         // assign employee number
         employees[employees.length].employeeNum = empCount;
+        // console.log("Employee # " + employees[employees.length].employeeNum); // test
         // assign new employee to array
         employees[employees.length] = employeeData;
         // console.log(employees[employees.length]); // test
