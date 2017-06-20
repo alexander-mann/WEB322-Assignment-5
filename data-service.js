@@ -20,7 +20,6 @@ module.exports.initialize = () => {
             else {
                 employees = JSON.parse(data);
                 // console.log(employees); // test
-                empCount = employees.length; // set employee count
                 fs.readFile('./data/departments.json', (err, data) => {
                     if(err) {
                         reject("Initialization Error - Department Data");
@@ -28,6 +27,7 @@ module.exports.initialize = () => {
                     else {
                         departments = JSON.parse(data);
                         // console.log(departments); // test
+                        empCount = employees.length; // set employee count
                         resolve("Initialization Successful");
                     }
                 });
@@ -171,10 +171,10 @@ module.exports.addEmployee = (employeeData) => {
         // increment empCount
         empCount++;
         // assign employee number
-        employees[employees.length].employeeNum = empCount;
-        // console.log("Employee # " + employees[employees.length].employeeNum); // test
+        employeeData.employeeNum = empCount;
+        // console.log("Employee # " + employeeData.employeeNum); // test
         // assign new employee to array
-        employees[employees.length] = employeeData;
+        employees.push(employeeData);
         // console.log(employees[employees.length]); // test
         if(employees[employees.length].employeeManagerNum != employeeData.employeeManagerNum) {
             reject("Employee Was Not Added Successfully");

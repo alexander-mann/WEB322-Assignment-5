@@ -13,7 +13,7 @@
 var express = require("express");
 var path = require("path");
 const dataService = require("./data-service.js"); // link data-service.js
-const exphbs = require('express-handlebars'); 
+const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 var app = express();
 
@@ -126,7 +126,7 @@ app.get("/employee/:empNum", (req, res) => {
 
 // setup route to /managers
 app.get("/managers", (req, res) => {
-    console.log("-getManagers called"); // test //
+  console.log("-getManagers called"); // test //
   dataService.getManagers()
     .then((data) => {
       console.log("-getManagers resolved"); // test //
@@ -156,12 +156,22 @@ app.get("/departments", (req, res) => {
 
 // setup route to /employees/add
 app.get("/employees/add", (req, res) => {
-  res.render("addEmployee");
+  console.log("-addEmployee called"); // test //
+  dataService.addEmployee(req.body)
+    .then((data) => {
+      console.log("-addEmployee resolved"); // test //
+      res.render("addEmployee");
+    })
+    .catch((err) => {
+      console.log(err);
+      console.log("-addEmployee rejected"); // test //
+    });
 });
 
 // setup route to post new data
-app.post("/employees/add", (req, res) => { 
-  console.log(req.body); res.redirect("/employees"); 
+app.post("/employees/add", (req, res) => {
+  console.log(req.body);
+  res.redirect("/employees");
 });
 
 // setup route to 'no matching route'
