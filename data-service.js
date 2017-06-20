@@ -167,6 +167,21 @@ module.exports.getDepartments = () => {
 // FUNCTION: ADD NEW EMPLOYEE
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.addEmployee = (employeeData) => {
-    
+    return new Promise((resolve, reject) => {
+        // increment empCount
+        empCount++;
+        // assign employee number
+        employees[employees.length].employeeNum = empCount;
+        // assign new employee to array
+        employees[employees.length] = employeeData;
+        // print out new employee data
+        // console.log(employees[employees.length]); // test
+        if(employees[employees.length].employeeManagerNum != employeeData.employeeManagerNum) {
+            reject("Employee Was Not Added Successfully");
+        }
+        else {
+            resolve();
+        }
+    });
 };
 ////////////////////////////////////////////////////////////////////////////////
