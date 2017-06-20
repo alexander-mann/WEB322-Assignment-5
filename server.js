@@ -157,21 +157,14 @@ app.get("/departments", (req, res) => {
 // setup route to /employees/add
 app.get("/employees/add", (req, res) => {
   console.log("-addEmployee called"); // test //
-  dataService.addEmployee(req.body)
-    .then((data) => {
-      console.log("-addEmployee resolved"); // test //
-      res.render("addEmployee");
-    })
-    .catch((err) => {
-      console.log(err);
-      console.log("-addEmployee rejected"); // test //
-    });
+  res.render("addEmployee");
 });
 
 // setup route to post new data
 app.post("/employees/add", (req, res) => {
   console.log(req.body);
-  res.redirect("/employees");
+  dataService.addEmployee(req.body)
+    .then(res.redirect("/employees"));
 });
 
 // setup route to 'no matching route'

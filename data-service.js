@@ -170,13 +170,12 @@ module.exports.addEmployee = (employeeData) => {
     return new Promise((resolve, reject) => {
         // increment empCount
         empCount++;
-        // console.log(empCount); // test
         // assign employee number
         employeeData.employeeNum = empCount;
         // console.log("Employee # " + employeeData.employeeNum); // test
         // assign new employee to array
         employees.push(employeeData);
-        // console.log(employees[empCount-1]);
+        // console.log(employees[empCount-1]); // test
         // console.log("Employee # " + employees[empCount-1].employeeNum) // test
         if(employees[empCount-1].employeeNum != employeeData.employeeNum) {
             reject("Employee Was Not Added Successfully");
