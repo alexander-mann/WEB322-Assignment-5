@@ -115,13 +115,19 @@ app.get("/employee/:empNum", (req, res) => {
   dataService.getEmployeeByNum(req.params.empNum)
     .then((data) => {
       console.log("-getEmployeeByNum resolved"); // test //
-      res.json(data);
+      res.render("employee", { data: data });
     })
     .catch((err) => {
-      res.json(err);
+      res.status(404).send("Employee Not Found");
       console.log(err);
       console.log("-getEmployeeByNum rejected"); // test //
     });
+});
+
+// setup route to post /employee/update
+app.post("/employee/update", (req, res) => {
+  console.log(req.body);
+  res.redirect("/employees");
 });
 
 // setup route to /managers
