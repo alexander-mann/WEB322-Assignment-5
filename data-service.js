@@ -172,11 +172,8 @@ module.exports.addEmployee = (employeeData) => {
         empCount++;
         // assign employee number
         employeeData.employeeNum = empCount;
-        // console.log("Employee # " + employeeData.employeeNum); // test
         // assign new employee to array
         employees.push(employeeData);
-        // console.log(employees[empCount-1]); // test
-        // console.log("Employee # " + employees[empCount-1].employeeNum) // test
         if (employees[empCount - 1].employeeNum != employeeData.employeeNum) {
             reject("Employee Was Not Added Successfully");
         }
@@ -189,15 +186,11 @@ module.exports.addEmployee = (employeeData) => {
 // FUNCTION: UPDATE EMPLOYEE INFORMATION
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.updateEmployee = (employeeData) => {
-    console.log("CALLED");
-    console.log(employeeData.employeeNum);
     return new Promise((resolve, reject) => {
         for (let i = 0; i < employees.length; i++) {
             if (employees[i].employeeNum == employeeData.employeeNum) {
                 employees[i] = employeeData;
-                console.log(employees[i]);
                 resolve();
-                console.log("RESOLVED");
             }
         }
     });

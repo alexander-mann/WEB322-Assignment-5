@@ -17,6 +17,11 @@
                                 <input class="form-control" id="last_name" name="last_name" type="text" value="{{data.last_name}}" />
                             </div>
                         </div>
+                        <div class="col-md-0">
+                            <div class="form-group">
+                                <input class="form-control" id="employeeNum" name="employeeNum" type="hidden" value="{{data.employeeNum}}" />
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="email">Email:</label>
@@ -76,11 +81,11 @@
                             <div class="form-group">
                                 <label for="status">Status:</label>
                                 {{#equal data.status "Full Time"}}
-                                <input class="form-control" id="status" name="status" type="radio" checked> Full Time </input>
-                                <input class="form-control" id="status" name="status" type="radio"> Part Time </input>
+                                <input class="form-control" id="status" name="status" type="radio" value="Full Time" checked> Full Time </input>
+                                <input class="form-control" id="status" name="status" type="radio" value="Part Time"> Part Time </input>
                                 {{else}}
-                                <input class="form-control" id="status" name="status" type="radio"> Full Time </input>
-                                <input class="form-control" id="status" name="status" type="radio" checked> Part Time </input>
+                                <input class="form-control" id="status" name="status" type="radio" value="Full Time"> Full Time </input>
+                                <input class="form-control" id="status" name="status" type="radio" value="Part Time" checked> Part Time </input>
                                 {{/equal}}
                             </div>
                         </div>
@@ -96,32 +101,32 @@
                                     {{#equal data.department "2"}}
                                     <option selected>2</option>
                                     {{else}}
-                                    <option>1</option>
+                                    <option>2</option>
                                     {{/equal}}
                                     {{#equal data.department "3"}}
                                     <option selected>3</option>
                                     {{else}}
-                                    <option>1</option>
+                                    <option>3</option>
                                     {{/equal}}
                                     {{#equal data.department "4"}}
                                     <option selected>4</option>
                                     {{else}}
-                                    <option>1</option>
+                                    <option>4</option>
                                     {{/equal}}
                                     {{#equal data.department "5"}}
                                     <option selected>5</option>
                                     {{else}}
-                                    <option>1</option>
+                                    <option>5</option>
                                     {{/equal}}
                                     {{#equal data.department "6"}}
                                     <option selected>6</option>
                                     {{else}}
-                                    <option>1</option>
+                                    <option>6</option>
                                     {{/equal}}
                                     {{#equal data.department "7"}}
                                     <option selected>7</option>
                                     {{else}}
-                                    <option>1</option>
+                                    <option>7</option>
                                     {{/equal}}
                                 </select>
                             </div>
