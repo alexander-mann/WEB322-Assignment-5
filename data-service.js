@@ -14,14 +14,14 @@ const fs = require('fs');
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
         fs.readFile('./data/employees.json', (err, data) => {
-            if(err) {
+            if (err) {
                 reject("Initialization Error - Employee Data");
             }
             else {
                 employees = JSON.parse(data);
                 // console.log(employees); // test
                 fs.readFile('./data/departments.json', (err, data) => {
-                    if(err) {
+                    if (err) {
                         reject("Initialization Error - Department Data");
                     }
                     else {
@@ -40,7 +40,7 @@ module.exports.initialize = () => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getAllEmployees = () => {
     return new Promise((resolve, reject) => {
-        if(employees.length === 0) {
+        if (employees.length === 0) {
             reject("No Employee Data Found");
         }
         else {
@@ -54,13 +54,13 @@ module.exports.getAllEmployees = () => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeesByStatus = (status) => {
     let empStatus = []; // temp array to hold results
-    for(let i = 0; i < employees.length; i++) {
-        if(employees[i].status == status) {
+    for (let i = 0; i < employees.length; i++) {
+        if (employees[i].status == status) {
             empStatus.push(employees[i]);
         }
     }
     return new Promise((resolve, reject) => {
-        if(empStatus.length === 0) {
+        if (empStatus.length === 0) {
             reject("No Matching Results Found");
         }
         else {
@@ -74,13 +74,13 @@ module.exports.getEmployeesByStatus = (status) => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeesByDepartment = (department) => {
     let empDept = []; // temp array to hold results
-    for(let i = 0; i < employees.length; i++) {
-        if(employees[i].department == department) {
+    for (let i = 0; i < employees.length; i++) {
+        if (employees[i].department == department) {
             empDept.push(employees[i]);
         }
     }
     return new Promise((resolve, reject) => {
-        if(empDept.length === 0) {
+        if (empDept.length === 0) {
             reject("No Matching Results Found");
         }
         else {
@@ -94,13 +94,13 @@ module.exports.getEmployeesByDepartment = (department) => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeesByManager = (manager) => {
     let empMngr = []; // temp array to hold results
-    for(let i = 0; i < employees.length; i++) {
-        if(employees[i].employeeManagerNum == manager) {
+    for (let i = 0; i < employees.length; i++) {
+        if (employees[i].employeeManagerNum == manager) {
             empMngr.push(employees[i]);
         }
     }
     return new Promise((resolve, reject) => {
-        if(empMngr.length === 0) {
+        if (empMngr.length === 0) {
             reject("No Matching Results Found");
         }
         else {
@@ -114,13 +114,13 @@ module.exports.getEmployeesByManager = (manager) => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeeByNum = (num) => {
     let emp = []; // temp array to hold results
-    for(let i = 0; i < employees.length; i++) {
-        if(employees[i].employeeNum == num) {
+    for (let i = 0; i < employees.length; i++) {
+        if (employees[i].employeeNum == num) {
             emp = employees[i];
         }
     }
     return new Promise((resolve, reject) => {
-        if(emp.length === 0) {
+        if (emp.length === 0) {
             reject("No Employee with ID " + num + " Found");
         }
         else {
@@ -134,13 +134,13 @@ module.exports.getEmployeeByNum = (num) => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getManagers = () => {
     let mngrs = []; // temp array to hold results
-    for(let i = 0; i < employees.length; i++) {
-        if(employees[i].isManager === true) {
+    for (let i = 0; i < employees.length; i++) {
+        if (employees[i].isManager === true) {
             mngrs.push(employees[i]);
         }
     }
     return new Promise((resolve, reject) => {
-        if(mngrs.length === 0) {
+        if (mngrs.length === 0) {
             reject("No Managers Found");
         }
         else {
@@ -154,7 +154,7 @@ module.exports.getManagers = () => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getDepartments = () => {
     return new Promise((resolve, reject) => {
-        if(departments.length === 0) {
+        if (departments.length === 0) {
             reject("No Department Data Found");
         }
         else {
@@ -177,11 +177,28 @@ module.exports.addEmployee = (employeeData) => {
         employees.push(employeeData);
         // console.log(employees[empCount-1]); // test
         // console.log("Employee # " + employees[empCount-1].employeeNum) // test
-        if(employees[empCount-1].employeeNum != employeeData.employeeNum) {
+        if (employees[empCount - 1].employeeNum != employeeData.employeeNum) {
             reject("Employee Was Not Added Successfully");
         }
         else {
             resolve();
+        }
+    });
+};
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: UPDATE EMPLOYEE INFORMATION
+////////////////////////////////////////////////////////////////////////////////
+module.exports.updateEmployee = (employeeData) => {
+    console.log("CALLED");
+    console.log(employeeData.employeeNum);
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < employees.length; i++) {
+            if (employees[i].employeeNum == employeeData.employeeNum) {
+                employees[i] = employeeData;
+                console.log(employees[i]);
+                resolve();
+                console.log("RESOLVED");
+            }
         }
     });
 };
