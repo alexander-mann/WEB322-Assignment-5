@@ -135,7 +135,7 @@ module.exports.getEmployeeByNum = (num) => {
 module.exports.getManagers = () => {
     let mngrs = []; // temp array to hold results
     for (let i = 0; i < employees.length; i++) {
-        if (employees[i].isManager === true) {
+        if (employees[i].isManager) {
             mngrs.push(employees[i]);
         }
     }
@@ -186,12 +186,12 @@ module.exports.addEmployee = (employeeData) => {
 // FUNCTION: UPDATE EMPLOYEE INFORMATION
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.updateEmployee = (employeeData) => {
-    console.log("Manager? " + employeeData.isManager);
+    // console.log("Manager? " + employeeData.isManager);
     return new Promise((resolve, reject) => {
         for (let i = 0; i < employees.length; i++) {
             if (employees[i].employeeNum == employeeData.employeeNum) {
                 employees[i] = employeeData;
-                console.log("Final = " + employees[i].isManager);
+                // console.log("Final = " + employees[i].isManager);
                 resolve();
             }
         }

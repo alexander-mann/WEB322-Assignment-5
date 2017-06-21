@@ -17,8 +17,8 @@
             <tbody>
                 {{#each data}} 
                 <tr>
-                    <td> {{departmentId}} </td>
-                    <td> {{departmentName}} </td>
+                    <td> <a href="/employees?department={{departmentId}}"> {{departmentId}} </a> </td>
+                    <td> <a href="/employees?department={{departmentIdc}}"> {{departmentName}} </a> </td>
                 </tr>
                 {{/each}}
             </tbody>
