@@ -127,6 +127,7 @@ app.get("/employee/:empNum", (req, res) => {
 // setup route to post /employee/update
 app.post("/employee/update", (req, res) => {
   console.log(req.body);
+  console.log("-updateEmployee resolved"); // test //
   dataService.updateEmployee(req.body)
     .then(res.redirect("/employees"));
 });

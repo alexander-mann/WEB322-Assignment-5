@@ -64,11 +64,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="isManager">Manager:</label>
-                                {{#if data.isManager}}
-                                <input class="form-control" id="isManager" name="isManager" type="checkbox" value="true" checked />
-                                {{else}}
-                                <input class="form-control" id="isManager" name="isManager" type="checkbox" value="false" />
-                                {{/if}}
+                                <input class="form-control" id="isManager" name="isManager" type="checkbox" value="true" {{#if data.isManager}}checked{{/if}} />
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -80,58 +76,23 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="status">Status:</label> <br/>
-                                {{#equal data.status "Full Time"}}
-                                &nbsp&nbsp&nbsp&nbsp
-                                <input class="radio-inline" id="status" name="status" type="radio" value="Full Time" checked>&nbsp&nbspFull Time</input>
-                                &nbsp&nbsp&nbsp&nbsp
-                                <input class="radio-inline" id="status" name="status" type="radio" value="Part Time">&nbsp&nbspPart Time</input>
-                                {{else}}
-                                &nbsp&nbsp&nbsp&nbsp
-                                <input class="radio-inline" id="status" name="status" type="radio" value="Full Time">&nbsp&nbspFull Time</input>
-                                &nbsp&nbsp&nbsp&nbsp
-                                <input class="radio-inline" id="status" name="status" type="radio" value="Part Time" checked>&nbsp&nbspPart Time</input>
-                                {{/equal}}
+                                <input class="radio-inline" style="margin-left: 25px;" id="status" name="status" type="radio" value="Full Time" 
+                                {{#equal data.status "Full Time"}}checked{{/equal}}>&nbsp&nbspFull Time</input>
+                                <input class="radio-inline" style="margin-left: 32px;" id="status" name="status" type="radio" value="Part Time"
+                                {{#equal data.status "Part Time"}}checked{{/equal}}>&nbsp&nbspPart Time</input>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="department">Department</label>
                                 <select class="form-control" id="department" name="department">
-                                    {{#equal data.department "1"}}
-                                    <option selected>1</option>
-                                    {{else}}
-                                    <option>1</option>
-                                    {{/equal}}
-                                    {{#equal data.department "2"}}
-                                    <option selected>2</option>
-                                    {{else}}
-                                    <option>2</option>
-                                    {{/equal}}
-                                    {{#equal data.department "3"}}
-                                    <option selected>3</option>
-                                    {{else}}
-                                    <option>3</option>
-                                    {{/equal}}
-                                    {{#equal data.department "4"}}
-                                    <option selected>4</option>
-                                    {{else}}
-                                    <option>4</option>
-                                    {{/equal}}
-                                    {{#equal data.department "5"}}
-                                    <option selected>5</option>
-                                    {{else}}
-                                    <option>5</option>
-                                    {{/equal}}
-                                    {{#equal data.department "6"}}
-                                    <option selected>6</option>
-                                    {{else}}
-                                    <option>6</option>
-                                    {{/equal}}
-                                    {{#equal data.department "7"}}
-                                    <option selected>7</option>
-                                    {{else}}
-                                    <option>7</option>
-                                    {{/equal}}
+                                    <option {{#equal data.department "1"}}selected{{/equal}}>1</option>
+                                    <option {{#equal data.department "2"}}selected{{/equal}}>2</option>
+                                    <option {{#equal data.department "3"}}selected{{/equal}}>3</option>
+                                    <option {{#equal data.department "4"}}selected{{/equal}}>4</option>
+                                    <option {{#equal data.department "5"}}selected{{/equal}}>5</option>
+                                    <option {{#equal data.department "6"}}selected{{/equal}}>6</option>
+                                    <option {{#equal data.department "7"}}selected{{/equal}}>7</option>
                                 </select>
                             </div>
                         </div>
