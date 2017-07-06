@@ -204,12 +204,12 @@ module.exports.addEmployee = (employeeData) => {
             department: employeeData.department,
             hireDate: employeeData.hireDate
         })
-        .then(() => {
-            resolve();
-        })
-        .catch(() => {
-            reject("unable to create employee")
-        })
+            .then(() => {
+                resolve();
+            })
+            .catch(() => {
+                reject("unable to create employee")
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -241,14 +241,14 @@ module.exports.updateEmployee = (employeeData) => {
             department: employeeData.department,
             hireDate: employeeData.hireDate
         }, {
-            where: { employeeNum: employeeData.employeeNum }
-        })
-        .then(() => {
-            resolve();
-        })
-        .catch(() => {
-            reject("unable to update employee")
-        })
+                where: { employeeNum: employeeData.employeeNum }
+            })
+            .then(() => {
+                resolve();
+            })
+            .catch(() => {
+                reject("unable to update employee")
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -266,11 +266,54 @@ module.exports.addDepartment = (departmentData) => {
             departmentId: departmentData.departmentId,
             departmentName: departmentData.departmentName
         })
-        .then(() => {
-            resolve();
-        })
-        .catch(() => {
-            reject("unable to create department")
-        })
+            .then(() => {
+                resolve();
+            })
+            .catch(() => {
+                reject("unable to create department")
+            })
     });
 };
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: UPDATE DEPARTMENT
+////////////////////////////////////////////////////////////////////////////////
+module.exports.updateDepartment = (departmentData) => {
+    return new Promise(function (resolve, reject) {
+        // ensure all empty attributes are set to null
+        for (var prop in departmentData) {
+            if (departmentData[prop] == "") {
+                departmentData[prop] = null;
+            }
+        }
+        Department.update({
+            departmentName: departmentData.departmentName
+        }, {
+                where: { departmentId: departmentData.departmentId }
+            })
+            .then(() => {
+                resolve();
+            })
+            .catch(() => {
+                reject("unable to update department")
+            })
+    });
+};
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: GET DEPARTMENT BY ID
+////////////////////////////////////////////////////////////////////////////////
+module.exports.getDepartmentById = (id) => {
+    return new Promise(function (resolve, reject) {
+        Department.findAll({
+            where: {
+                departmentId: id
+            }
+        })
+            .then((data) => {
+                resolve(data[0]); // there is only one result
+            })
+            .catch(() => {
+                reject("no department with that id found")
+            })
+    });
+};
+////////////////////////////////////////////////////////////////////////////////
