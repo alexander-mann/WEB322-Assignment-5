@@ -168,11 +168,47 @@ app.get("/employees/add", (req, res) => {
   res.render("addEmployee");
 });
 
-// setup route to post new data
+// setup route to post new employee
 app.post("/employees/add", (req, res) => {
   console.log(req.body);
   dataService.addEmployee(req.body)
     .then(res.redirect("/employees"));
+});
+
+// setup route to /departments/add
+app.get("/departments/add", (req, res) => {
+  console.log("-addDepartment called"); // test //
+  res.render("addDepartment");
+});
+
+// setup route to post new department
+app.post("/departments/add", (req, res) => {
+  console.log(req.body);
+  dataService.addDepartment(req.body)
+    .then(res.redirect("/departments"));
+});
+
+// setup route to post /department/update
+app.post("/department/update", (req, res) => {
+  console.log(req.body);
+  console.log("-updateDepartment resolved"); // test //
+  dataService.updateDepartment(req.body)
+    .then(res.redirect("/department"));
+});
+
+// setup route to /department/value
+app.get("/department/:dptId", (req, res) => {
+  console.log("-getDepartmentById called"); // test //
+  dataService.getDepartmentById(req.params.dptId)
+    .then((data) => {
+      console.log("-getDepartmentById resolved"); // test //
+      res.render("department", { data: data });
+    })
+    .catch((err) => {
+      res.status(404).send("Department Not Found");
+      console.log(err);
+      console.log("-getDepartmentById rejected"); // test //
+    });
 });
 
 // setup route to 'no matching route'
