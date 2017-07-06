@@ -47,7 +47,13 @@ var Department = sequelize.define('Department', {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.initialize = () => {
     return new Promise(function (resolve, reject) {
-        reject();
+        sequelize.sync()
+            .then(() => {
+                resolve("database synced");
+            })
+            .catch(() => {
+                reject("unable to sync database");
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +61,13 @@ module.exports.initialize = () => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getAllEmployees = () => {
     return new Promise(function (resolve, reject) {
-        reject();
+        Employee.findAll()
+            .then((data) => {
+                resolve(data);
+            })
+            .catch(() => {
+                reject("no employee data found");
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +75,17 @@ module.exports.getAllEmployees = () => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeesByStatus = (status) => {
     return new Promise(function (resolve, reject) {
-        reject();
+        Employee.findAll({
+            where: {
+                status: status
+            }
+        })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch(() => {
+                reject("no employees with matching status found")
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +93,17 @@ module.exports.getEmployeesByStatus = (status) => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeesByDepartment = (department) => {
     return new Promise(function (resolve, reject) {
-        reject();
+        Employee.findAll({
+            where: {
+                department: department
+            }
+        })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch(() => {
+                reject("no employees with matching department found")
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +111,17 @@ module.exports.getEmployeesByDepartment = (department) => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeesByManager = (manager) => {
     return new Promise(function (resolve, reject) {
-        reject();
+        Employee.findAll({
+            where: {
+                employeeManagerNum: manager
+            }
+        })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch(() => {
+                reject("no employees with that manager found")
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +129,17 @@ module.exports.getEmployeesByManager = (manager) => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getEmployeeByNum = (num) => {
     return new Promise(function (resolve, reject) {
-        reject();
+        Employee.findAll({
+            where: {
+                employeeNum: num
+            }
+        })
+            .then((data) => {
+                resolve(data[0]); // there is only one result
+            })
+            .catch(() => {
+                reject("no employees with that number found")
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +147,17 @@ module.exports.getEmployeeByNum = (num) => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getManagers = () => {
     return new Promise(function (resolve, reject) {
-        reject();
+        Employee.findAll({
+            where: {
+                isManager: true
+            }
+        })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch(() => {
+                reject("no managers found")
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +165,13 @@ module.exports.getManagers = () => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.getDepartments = () => {
     return new Promise(function (resolve, reject) {
-        reject();
+        Department.findAll()
+            .then((data) => {
+                resolve(data);
+            })
+            .catch(() => {
+                reject("no department data found");
+            })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +179,37 @@ module.exports.getDepartments = () => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.addEmployee = (employeeData) => {
     return new Promise(function (resolve, reject) {
-        reject();
+        // ensure attribute is set properly
+        employeeData.isManager = (employeeData.isManager) ? true : false;
+        // ensure all empty attributes are set to null
+        for (var prop in employeeData) {
+            if (employeeData[prop] == "") {
+                employeeData[prop] = null;
+            }
+        }
+        Employee.create({
+            employeeNum: employeeData.employeeNum,
+            firstName: employeeData.firstName,
+            last_name: employeeData.last_name,
+            email: employeeData.email,
+            SSN: employeeData.SSN,
+            addressStreet: employeeData.addressStreet,
+            addressCity: employeeData.addressCity,
+            addressState: employeeData.addressState,
+            addressPostal: employeeData.addressPostal,
+            maritalStatus: employeeData.maritalStatus,
+            isManager: employeeData.isManager,
+            employeeManagerNum: employeeData.employeeManagerNum,
+            status: employeeData.status,
+            department: employeeData.department,
+            hireDate: employeeData.hireDate
+        })
+        .then(() => {
+            resolve();
+        })
+        .catch(() => {
+            reject("unable to create employee")
+        })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -119,7 +217,60 @@ module.exports.addEmployee = (employeeData) => {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.updateEmployee = (employeeData) => {
     return new Promise(function (resolve, reject) {
-        reject();
+        // ensure attribute is set properly
+        employeeData.isManager = (employeeData.isManager) ? true : false;
+        // ensure all empty attributes are set to null
+        for (var prop in employeeData) {
+            if (employeeData[prop] == "") {
+                employeeData[prop] = null;
+            }
+        }
+        Employee.update({
+            firstName: employeeData.firstName,
+            last_name: employeeData.last_name,
+            email: employeeData.email,
+            SSN: employeeData.SSN,
+            addressStreet: employeeData.addressStreet,
+            addressCity: employeeData.addressCity,
+            addressState: employeeData.addressState,
+            addressPostal: employeeData.addressPostal,
+            maritalStatus: employeeData.maritalStatus,
+            isManager: employeeData.isManager,
+            employeeManagerNum: employeeData.employeeManagerNum,
+            status: employeeData.status,
+            department: employeeData.department,
+            hireDate: employeeData.hireDate
+        }, {
+            where: { employeeNum: employeeData.employeeNum }
+        })
+        .then(() => {
+            resolve();
+        })
+        .catch(() => {
+            reject("unable to update employee")
+        })
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: ADD NEW DEPARTMENT
+////////////////////////////////////////////////////////////////////////////////
+module.exports.addDepartment = (departmentData) => {
+    return new Promise(function (resolve, reject) {
+        // ensure all empty attributes are set to null
+        for (var prop in departmentData) {
+            if (departmentData[prop] == "") {
+                departmentData[prop] = null;
+            }
+        }
+        Department.create({
+            departmentId: departmentData.departmentId,
+            departmentName: departmentData.departmentName
+        })
+        .then(() => {
+            resolve();
+        })
+        .catch(() => {
+            reject("unable to create department")
+        })
+    });
+};
