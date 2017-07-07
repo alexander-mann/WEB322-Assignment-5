@@ -317,3 +317,17 @@ module.exports.getDepartmentById = (id) => {
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: DELETE EMPLOYEE BY NUMBER
+////////////////////////////////////////////////////////////////////////////////
+module.exports.deleteEmployeeByNum = (num) => {
+    return new Promise(function (resolve, reject) {
+       Employee.destroy({
+           where: { employeeNum: num }
+       }).then(() => {
+           resolve("employee #" + num + " has been deleted");
+       }).catch(() => {
+           reject("unable to delete employee #" + num);
+       })
+    });
+};
+////////////////////////////////////////////////////////////////////////////////

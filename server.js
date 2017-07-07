@@ -119,16 +119,37 @@ app.get("/employees", (req, res) => {
 
 // setup route to /employee/value
 app.get("/employee/:empNum", (req, res) => {
-  console.log("-getEmployeeByNum called"); // test //
+
+  // initialize an empty object to store the values
+  let viewData = {};
+
   dataService.getEmployeeByNum(req.params.empNum)
     .then((data) => {
-      console.log("-getEmployeeByNum resolved"); // test //
-      res.render("employee", { data: data });
-    })
-    .catch((err) => {
-      res.status(404).send("Employee Not Found");
-      console.log(err);
-      console.log("-getEmployeeByNum rejected"); // test //
+      viewData.data = data; //store employee data in the "viewData" object as "data"
+    }).catch(() => {
+      viewData.data = null; // set employee to null if there was an error
+    }).then(dataService.getDepartments)
+    .then((data) => {
+      viewData.departments = data; // store department data in the "viewData" object as "departments"
+
+      // loop through viewData.departments and once we have found the departmentId that matches
+      // the employee's "department" value, add a "selected" property to the matching
+      // viewData.departments object
+
+      for (let i = 0; i < viewData.departments.length; i++) {
+        if (viewData.departments[i].departmentId == viewData.data.department) {
+          viewData.departments[i].selected = true;
+        }
+      }
+
+    }).catch(() => {
+      viewData.departments = []; // set departments to empty if there was an error
+    }).then(() => {
+      if (viewData.data == null) { // if no employee - return an error
+        res.status(404).send("Employee Not Found");
+      } else {
+        res.render("employee", { viewData: viewData }); // render the "employee" view
+      }
     });
 });
 
@@ -189,7 +210,16 @@ app.get("/departments", (req, res) => {
 // setup route to /employees/add
 app.get("/employees/add", (req, res) => {
   console.log("-addEmployee called"); // test //
-  res.render("addEmployee");
+  dataService.getDepartments()
+    .then((data) => {
+      console.log("-addEmployee resolved"); // test //
+      res.render("addEmployee", { departments: data });
+    })
+    .catch((err) => {
+      res.render("addEmployee", { departments: [] });
+      console.log(err);
+      console.log("-addEmployee rejected"); // test //
+    });
 });
 
 // setup route to post new employee
@@ -244,6 +274,24 @@ app.get("/department/:dptId", (req, res) => {
       res.status(404).send("Department Not Found");
       console.log(err);
       console.log("-getDepartmentById rejected"); // test //
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// DELETE EMPLOYEE BY NUMBER
+////////////////////////////////////////////////////////////////////////////////
+
+app.get("/employee/delete/:empNum", (req, res) => {
+  console.log("-deleteEmployeeByNum called"); // test //
+  dataService.deleteEmployeeByNum(req.params.empNum)
+    .then((data) => {
+      console.log("-deleteEmployeeByNum resolved"); // test //
+      res.redirect("/employees"); // redirect to allEmployees
+    })
+    .catch((err) => {
+      res.status(500).send("Unable to Remove Employee / Employee Not Found");
+      console.log(err);
+      console.log("-deleteEmployeeByNum rejected"); // test //
     });
 });
 

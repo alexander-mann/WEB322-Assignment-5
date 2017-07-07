@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h1>{{data.firstName}} {{data.last_name}} - Employee: {{data.employeeNum}}</h1>
+        <h1>{{viewData.data.firstName}} {{viewData.data.last_name}} - Employee: {{viewData.data.employeeNum}}</h1>
             <form method="post" action="/employee/update">
                 <fieldset>
                     <legend>Personal Information</legend>
@@ -8,54 +8,54 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="firstName">First Name:</label>
-                                <input class="form-control" id="firstName" name="firstName" type="text" value="{{data.firstName}}" />
+                                <input class="form-control" id="firstName" name="firstName" type="text" value="{{viewData.data.firstName}}" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
-                                <input class="form-control" id="last_name" name="last_name" type="text" value="{{data.last_name}}" />
+                                <input class="form-control" id="last_name" name="last_name" type="text" value="{{viewData.data.last_name}}" />
                             </div>
                         </div>
                         <div class="col-md-0">
                             <div class="form-group">
-                                <input class="form-control" id="employeeNum" name="employeeNum" type="hidden" value="{{data.employeeNum}}" />
+                                <input class="form-control" id="employeeNum" name="employeeNum" type="hidden" value="{{viewData.data.employeeNum}}" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input class="form-control" id="email" name="email" type="email" value="{{data.email}}" />
+                                <input class="form-control" id="email" name="email" type="email" value="{{viewData.data.email}}" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="SSN">Social Security Number:</label>
-                                <input class="form-control" id="SSN" name="SSN" type="text" value="{{data.SSN}}" />
+                                <input class="form-control" id="SSN" name="SSN" type="text" value="{{viewData.data.SSN}}" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="addressStreet">Address (Street):</label>
-                                <input class="form-control" id="addressStreet" name="addressStreet" type="text" value="{{data.addressStreet}}" />
+                                <input class="form-control" id="addressStreet" name="addressStreet" type="text" value="{{viewData.data.addressStreet}}" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="addresCity">Address (City):</label>
-                                <input class="form-control" id="addresCity" name="addresCity" type="text" value="{{data.addresCity}}" />
+                                <input class="form-control" id="addresCity" name="addresCity" type="text" value="{{viewData.data.addresCity}}" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="addressState">Address (State):</label>
-                                <input class="form-control" id="addressState" name="addressState" type="text" value="{{data.addressState}}" />
+                                <input class="form-control" id="addressState" name="addressState" type="text" value="{{viewData.data.addressState}}" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="addressPostal">Address (Zip Code):</label>
-                                <input class="form-control" id="addressPostal" name="addressPostal" type="text" value="{{data.addressPostal}}" />
+                                <input class="form-control" id="addressPostal" name="addressPostal" type="text" value="{{viewData.data.addressPostal}}" />
                             </div>
                         </div>
                     </div>
@@ -64,42 +64,42 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="isManager">Manager:</label>
-                                <input class="form-control" id="isManager" name="isManager" type="checkbox" value="true" {{#if data.isManager}}checked{{/if}} />
+                                <input class="form-control" id="isManager" name="isManager" type="checkbox" value="true" {{#if viewData.data.isManager}}checked{{/if}} />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="employeeManagerNum">Employee's Manager Number:</label>
-                                <input class="form-control" id="employeeManagerNum" name="employeeManagerNum" type="text" value="{{data.employeeManagerNum}}" />
+                                <input class="form-control" id="employeeManagerNum" name="employeeManagerNum" type="text" value="{{viewData.data.employeeManagerNum}}" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="status">Status:</label> <br/>
                                 <input class="radio-inline" style="margin-left: 25px;" id="status" name="status" type="radio" value="Full Time" 
-                                {{#equal data.status "Full Time"}}checked{{/equal}}>&nbsp&nbspFull Time</input>
+                                {{#equal viewData.data.status "Full Time"}}checked{{/equal}}>&nbsp&nbspFull Time</input>
                                 <input class="radio-inline" style="margin-left: 32px;" id="status" name="status" type="radio" value="Part Time"
-                                {{#equal data.status "Part Time"}}checked{{/equal}}>&nbsp&nbspPart Time</input>
+                                {{#equal viewData.data.status "Part Time"}}checked{{/equal}}>&nbsp&nbspPart Time</input>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="department">Department</label>
-                                <select class="form-control" id="department" name="department">
-                                    <option {{#equal data.department "1"}}selected{{/equal}}>1</option>
-                                    <option {{#equal data.department "2"}}selected{{/equal}}>2</option>
-                                    <option {{#equal data.department "3"}}selected{{/equal}}>3</option>
-                                    <option {{#equal data.department "4"}}selected{{/equal}}>4</option>
-                                    <option {{#equal data.department "5"}}selected{{/equal}}>5</option>
-                                    <option {{#equal data.department "6"}}selected{{/equal}}>6</option>
-                                    <option {{#equal data.department "7"}}selected{{/equal}}>7</option>
-                                </select>
+                                {{#if viewData.departments}}
+                                    <select class="form-control" name="department" id="department">
+                                    {{#each viewData.departments}}
+                                        <option value="{{departmentId}}" {{#if selected}} selected {{/if}} >{{departmentName}} </option>
+                                    {{/each}}
+                                    </select>
+                                {{else}}
+                                    <div>No Departments</div>
+                                {{/if}}
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="hireDate">Hire Date</label>
-                                <input class="form-control" id="hireDate" name="hireDate" type="text" value="{{data.hireDate}}" readonly />
+                                <input class="form-control" id="hireDate" name="hireDate" type="text" value="{{viewData.data.hireDate}}" readonly />
                             </div>
                         </div>
                     </div>
