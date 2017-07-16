@@ -15,7 +15,7 @@ var path = require("path");
 const dataService = require("./data-service.js"); // link data-service.js
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const dataServiceComments = require("./data-service-comments.js");
+const dataServiceComments = require("./data-service-comments.js"); // link to data-service-comments.js
 var app = express();
 
 var HTTP_PORT = process.env.PORT || 8080;
