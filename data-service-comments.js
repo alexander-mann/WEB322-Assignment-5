@@ -1,7 +1,7 @@
 // create comment schema
 const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
-var contentSchema = new Schema({
+var commentSchema = new Schema({
     "authorName": String,
     "authorEmail": String,
     "subject": String,
@@ -17,7 +17,7 @@ let Comment; // to be defined on new connection (see initialize)
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.initialize = function () {
     return new Promise(function (resolve, reject) {
-        let db = mongoose.createConnection("connectionString");
+        let db = mongoose.createConnection("mongodb://amann:seneca@ds161162.mlab.com:61162/amann9_web322_a6");
 
         db.on('error', (err) => {
             reject(err); // reject the promise with the provided error
@@ -53,13 +53,8 @@ module.exports.getAllComments = function () {
         Comment.find()
             .exec()
             .then((data) => {
-                if (!data) {
-                    console.log("No comments found");
-                }
-                else {
-                    console.log(data); // error checking
-                    resolve(data);
-                }
+                console.log(data); // error checking
+                resolve(data);
             })
             .catch((err) => {
                 reject(err);
@@ -72,17 +67,17 @@ module.exports.getAllComments = function () {
 module.exports.addReply = function (data) {
     return new Promise(function (resolve, reject) {
         data.repliedData = Date.now(); // set to current date/time
-        
-        Comment.update( {comment_id: data.comment_id} ),
-        {$addToSet: {replies: data}},
-        ({multi: false})
-        .exec()
-        .then((data) => {
-            console.log(data); // error checking
-            resolve();
-        })
-        .catch((err) => {
-            reject(err);
-        });
+
+        Comment.update({ comment_id: data.comment_id }),
+            { $addToSet: { replies: data } },
+            ({ multi: false })
+                .exec()
+                .then((data) => {
+                    console.log(data); // error checking
+                    resolve();
+                })
+                .catch((err) => {
+                    reject(err);
+                });
     });
 };
