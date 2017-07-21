@@ -4,7 +4,7 @@
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
 *
-* Name: Alexander Mann Student ID: 131-632-168 Date: July 7, 2017
+* Name: Alexander Mann Student ID: 131-632-168 Date: July 21, 2017
 *
 * Online (Heroku) Link: https://amann9-project.herokuapp.com/
 *
@@ -48,6 +48,23 @@ app.engine(".hbs", exphbs({
 app.set("view engine", ".hbs");
 
 ////////////////////////////////////////////////////////////////////////////////
+// INITIALIZATION
+////////////////////////////////////////////////////////////////////////////////
+
+// setup http server to listen on HTTP_PORT
+dataService.initialize()
+  .then(dataServiceComments.initialize())
+  .then(() => {
+    console.log("-initialization successful"); // test //
+    app.listen(HTTP_PORT, onHttpStart);
+  })
+  .catch((err) => {
+    res.json(err);
+    console.log(err);
+    console.log("-initialization failed"); // test //
+  });
+
+////////////////////////////////////////////////////////////////////////////////
 // HOME
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -64,7 +81,7 @@ app.get("/", function (req, res) {
 app.get("/about", function (req, res) {
   dataServiceComments.getAllComments()
     .then((data) => {
-      res.render("about", { data: dataFromPromise });
+      res.render("about", { data: data });
     })
     .catch((err) => {
       res.render("about");
@@ -310,18 +327,13 @@ app.get("/employee/delete/:empNum", (req, res) => {
     });
 });
 
-// setup route to 'no matching route'
-app.use((req, res) => {
-  res.status(404).send("Page Not Found");
-});
-
 ////////////////////////////////////////////////////////////////////////////////
 // ADD COMMENT
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to post /about/addComment
 app.post("/about/addComment", (req, res) => {
-  console.log("-addComment resolved"); // test //
+  console.log("-addComment called"); // test //
   dataServiceComments.addComment(req.body)
     .then(res.redirect("/about"))
     .catch((err) => {
@@ -329,13 +341,14 @@ app.post("/about/addComment", (req, res) => {
       res.redirect("/about");
     });
 });
+
 ////////////////////////////////////////////////////////////////////////////////
 // ADD REPLY
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to post /about/addReply
 app.post("/about/addReply", (req, res) => {
-  console.log("-addReply resolved"); // test //
+  console.log("-addReply called"); // test //
   dataServiceComments.addReply(req.body)
     .then(res.redirect("/about"))
     .catch((err) => {
@@ -343,19 +356,8 @@ app.post("/about/addReply", (req, res) => {
       res.redirect("/about");
     });
 });
-////////////////////////////////////////////////////////////////////////////////
-// INITIALIZATION
-////////////////////////////////////////////////////////////////////////////////
 
-// setup http server to listen on HTTP_PORT
-dataService.initialize()
-  .then(dataServiceComments.initialize())
-    .then(() => {
-      console.log("-initialization successful"); // test //
-      app.listen(HTTP_PORT, onHttpStart);
-    })
-    .catch((err) => {
-      res.json(err);
-      console.log(err);
-      console.log("-initialization failed"); // test //
-    });
+// setup route to 'no matching route'
+app.use((req, res) => {
+  res.status(404).send("Page Not Found");
+});

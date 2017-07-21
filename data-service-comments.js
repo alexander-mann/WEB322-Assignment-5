@@ -40,7 +40,8 @@ module.exports.addComment = function (data) {
             if (err) {
                 reject("There was an error saving the comment: " + err);
             } else {
-                resolve("Comment saved as " + newComment._id);
+                console.log("Comment saved as " + newComment._id);
+                resolve(newComment._id);
             }
         });
     });
@@ -53,7 +54,7 @@ module.exports.getAllComments = function () {
         Comment.find()
             .exec()
             .then((data) => {
-                console.log(data); // error checking
+                //console.log(data); // error checking
                 resolve(data);
             })
             .catch((err) => {
@@ -66,14 +67,15 @@ module.exports.getAllComments = function () {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.addReply = function (data) {
     return new Promise(function (resolve, reject) {
-        data.repliedData = Date.now(); // set to current date/time
-
-        Comment.update({ comment_id: data.comment_id }),
+        data.repliedDate = Date.now(); // set to current date/time
+        //console.log("addReply called")
+        Comment.update({ _id: data.comment_id },
             { $addToSet: { replies: data } },
-            ({ multi: false })
+            { multi: false })
                 .exec()
-                .then((data) => {
-                    console.log(data); // error checking
+                .then(() => {
+                    //console.log(data); // error checking
+                    console.log("-addReply resolved");
                     resolve();
                 })
                 .catch((err) => {
