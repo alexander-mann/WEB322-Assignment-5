@@ -95,7 +95,30 @@
 			<div class="well">
 				<div class="row">
 					<div class="col-md-12">
-						REPLY FORM
+						<form method="post" action="/about/addReply">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<input class="form-control" id="authorName" name="authorName" type="text" placeholder="Name"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<input class="form-control" id="authorEmail" name="authorEmail" type="email" placeholder="Email"/>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<input class="form-control" id="commentText" name="commentText" type="textarea" placeholder="Comment"/>
+									</div>
+								</div>
+								<div class="col-md-0">
+									<div class="form-group">
+										<input class="form-control" id="comment_id" name="comment_id" type="hidden" value="{{comment_id}}" />
+									</div>
+								</div>
+						<input type="submit" class="btn btn-primary pull-right" value="Reply" /><br /><br /><br />
+					</form>
 					</div>
 				</div>
 			</div>

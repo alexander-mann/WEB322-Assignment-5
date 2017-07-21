@@ -63,12 +63,12 @@ app.get("/", function (req, res) {
 // setup another route to listen on /about
 app.get("/about", function (req, res) {
   dataServiceComments.getAllComments()
-  .then((data) => {
-    res.render("about", { data: dataFromPromise });
-  })
-  .catch((err) => {
-    res.render("about");
-  })
+    .then((data) => {
+      res.render("about", { data: dataFromPromise });
+    })
+    .catch((err) => {
+      res.render("about");
+    })
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -321,49 +321,41 @@ app.use((req, res) => {
 
 // setup route to post /about/addComment
 app.post("/about/addComment", (req, res) => {
-  console.log(req.body);
   console.log("-addComment resolved"); // test //
   dataServiceComments.addComment(req.body)
-    .then(() => {
-      res.redirect("/about");
-    })
+    .then(res.redirect("/about"))
     .catch((err) => {
       console.log(err);
       res.redirect("/about");
-    })
+    });
 });
-
 ////////////////////////////////////////////////////////////////////////////////
 // ADD REPLY
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to post /about/addReply
 app.post("/about/addReply", (req, res) => {
-  console.log(req.body);
   console.log("-addReply resolved"); // test //
   dataServiceComments.addReply(req.body)
-    .then(() => {
-      res.redirect("/about");
-    })
+    .then(res.redirect("/about"))
     .catch((err) => {
       console.log(err);
       res.redirect("/about");
-    })
+    });
 });
-
 ////////////////////////////////////////////////////////////////////////////////
 // INITIALIZATION
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup http server to listen on HTTP_PORT
 dataService.initialize()
-.then(dataServiceComments.initialize())
-  .then(() => {
-    console.log("-initialization successful"); // test //
-    app.listen(HTTP_PORT, onHttpStart);
-  })
-  .catch((err) => {
-    res.json(err);
-    console.log(err);
-    console.log("-initialization failed"); // test //
-  });
+  .then(dataServiceComments.initialize())
+    .then(() => {
+      console.log("-initialization successful"); // test //
+      app.listen(HTTP_PORT, onHttpStart);
+    })
+    .catch((err) => {
+      res.json(err);
+      console.log(err);
+      console.log("-initialization failed"); // test //
+    });
