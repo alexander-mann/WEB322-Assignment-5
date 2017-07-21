@@ -47,14 +47,28 @@ app.engine(".hbs", exphbs({
 }));
 app.set("view engine", ".hbs");
 
+////////////////////////////////////////////////////////////////////////////////
+// HOME
+////////////////////////////////////////////////////////////////////////////////
+
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function (req, res) {
   res.render("home");
 });
 
+////////////////////////////////////////////////////////////////////////////////
+// ABOUT
+////////////////////////////////////////////////////////////////////////////////
+
 // setup another route to listen on /about
 app.get("/about", function (req, res) {
-  res.render("about");
+  dataServiceComments.getAllComments()
+  .then((data) => {
+    res.render("about", { data: dataFromPromise });
+  })
+  .catch((err) => {
+    res.render("about");
+  })
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -302,12 +316,49 @@ app.use((req, res) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////
+// ADD COMMENT
+////////////////////////////////////////////////////////////////////////////////
+
+// setup route to post /about/addComment
+app.post("/about/addComment", (req, res) => {
+  console.log(req.body);
+  console.log("-addComment resolved"); // test //
+  dataServiceComments.addComment(req.body)
+    .then(() => {
+      res.redirect("/about");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/about");
+    })
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// ADD REPLY
+////////////////////////////////////////////////////////////////////////////////
+
+// setup route to post /about/addReply
+app.post("/about/addReply", (req, res) => {
+  console.log(req.body);
+  console.log("-addReply resolved"); // test //
+  dataServiceComments.addReply(req.body)
+    .then(() => {
+      res.redirect("/about");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/about");
+    })
+});
+
+////////////////////////////////////////////////////////////////////////////////
 // INITIALIZATION
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup http server to listen on HTTP_PORT
 dataService.initialize()
-  .then((data) => {
+.then(dataServiceComments.initialize())
+  .then(() => {
     console.log("-initialization successful"); // test //
     app.listen(HTTP_PORT, onHttpStart);
   })
@@ -315,30 +366,4 @@ dataService.initialize()
     res.json(err);
     console.log(err);
     console.log("-initialization failed"); // test //
-  });
-*/
-
-// test comment initializer
-dataServiceComments.initialize()
-  .then(() => {
-    dataServiceComments.addComment({
-      authorName: "Comment 1 Author",
-      authorEmail: "comment1@mail.com",
-      subject: "Comment 1",
-      commentText: "Comment Text 1"
-    }).then((id) => {
-      dataServiceComments.addReply({
-        comment_id: id,
-        authorName: "Reply 1 Author",
-        authorEmail: "reply1@mail.com",
-        commentText: "Reply Text 1"
-      }).then(dataServiceComments.getAllComments)
-        .then((data) => {
-          console.log("comment: " + data[data.length - 1]);
-          process.exit();
-        });
-    });
-  }).catch((err) => {
-    console.log("Error: " + err);
-    process.exit();
   });
