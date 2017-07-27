@@ -83,6 +83,7 @@ function ensureLogin(req, res, next) {
 // setup http server to listen on HTTP_PORT
 dataService.initialize()
   .then(dataServiceComments.initialize())
+  .then(dataServiceAuth.initialize())
   .then(() => {
     console.log("-initialization successful"); // test //
     app.listen(HTTP_PORT, onHttpStart);
@@ -115,6 +116,61 @@ app.get("/about", function (req, res) {
     .catch((err) => {
       res.render("about");
     })
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// LOGIN
+////////////////////////////////////////////////////////////////////////////////
+
+app.get("/login", function (req, res) {
+  res.render("login");
+});
+
+app.post("/login", (req, res) => {
+  console.log("-checkUser called"); // test //
+  dataServiceAuth.checkUser(req.body)
+    .then((data) => {
+      console.log("-checkUser resolved"); // test //
+      // add user to the session
+      req.session.user = {
+      username: req.body.user
+      };
+      res.redirect('/employees');
+    })
+    .catch((err) => {
+      console.log("-checkUser rejected"); // test //
+      res.render("login", {errorMessage: err, user: req.body.user});
+    })
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// REGISTER
+////////////////////////////////////////////////////////////////////////////////
+
+app.get("/register", function (req, res) {
+  res.render("register");
+});
+
+app.post("/register", (req, res) => {
+  console.log("-registerUser called"); // test //
+  dataServiceAuth.registerUser(req.body)
+    .then(() => {
+      console.log("-registerUser resolved"); // test //
+      res.render("register", {successMessage: "User created"});
+    })
+    .catch((err) => {
+      console.log("-registerUser rejected"); // test //
+      res.render("register", {errorMessage: err, user: req.body.user});
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// LOGOUT
+////////////////////////////////////////////////////////////////////////////////
+
+app.get("/logout", function (req, res) {
+  req.session.reset();
+  res.redirect("/");
 });
 
 ////////////////////////////////////////////////////////////////////////////////
