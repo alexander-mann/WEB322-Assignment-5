@@ -41,7 +41,7 @@ module.exports.registerUser = function (userData) {
                     if(err.code == 11000) {
                         reject("User Name already taken");
                     } else {
-                        reject("There was an error create the user " + err);
+                        reject("There was an error create the user: " + err);
                     }
                 } else {
                     console.log("User saved as '" + newUser.user + "'");
@@ -49,5 +49,26 @@ module.exports.registerUser = function (userData) {
                 }
             })
         }
+    });
+};
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: CHECK USER
+////////////////////////////////////////////////////////////////////////////////
+module.exports.checkUser = function (userData) {
+    return new Promise(function (resolve, reject) {
+         User.find({ user : userData.user })
+            .exec()
+            .then((data) => {
+                if(users == "") {
+                    reject("Unable to find user: " + userData.user);
+                } else if(users[0].password != userData.password) {
+                    reject("Incorrect Password for user: " + userData.user);
+                } else {
+                    resolve();
+                }
+            })
+            .catch((err) => {
+                reject("Unable to find user: " + userData.user);
+            });
     });
 };
