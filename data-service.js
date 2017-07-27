@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-// ASSIGNMENT 5 ADD-ONS
-////////////////////////////////////////////////////////////////////////////////
 const Sequelize = require('sequelize');
 // set up sequelize to point to our postgres database
 var sequelize = new Sequelize('d7n3rptalm9ma1', 'nyvjasvfjikvpr', 'a7ca25cefdf39388d0ee2eb31a0f1bfd8810b531fd8404e7bead9ec39c3a7792', {

@@ -10,12 +10,18 @@
 *
 ********************************************************************************/
 
+////////////////////////////////////////////////////////////////////////////////
+// SET-UP
+////////////////////////////////////////////////////////////////////////////////
+
 var express = require("express");
 var path = require("path");
 const dataService = require("./data-service.js"); // link data-service.js
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const dataServiceComments = require("./data-service-comments.js"); // link to data-service-comments.js
+const cientSessions = require('client-sessions');
+const dataServiceAuth = require("./data-service-auth.js"); // link to data-service-auth.js
 var app = express();
 
 var HTTP_PORT = process.env.PORT || 8080;
@@ -46,6 +52,29 @@ app.engine(".hbs", exphbs({
   }
 }));
 app.set("view engine", ".hbs");
+
+// ensure correct use of the client-sessions middleware
+app.use(clientSessions({
+  cookieName: "session", // this is the object name that will be added to 'req'
+  secret: "assign7_web322", // this should be a long un-guessable string.
+  duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+  activeDuration: 1000 * 60 // the session will be extended by this many ms each request (1 minute)
+}));
+
+// ensure that all templates have access to a "session" object
+app.use(function(req, res, next) {
+res.locals.session = req.session;
+next();
+});
+
+// check if a user is logged in - if not, redirect to login page
+function ensureLogin(req, res, next) {
+  if (!req.session.user) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // INITIALIZATION
@@ -93,7 +122,7 @@ app.get("/about", function (req, res) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // set up route to /employees - populate employee data
-app.get("/employees", (req, res) => {
+app.get("/employees", ensureLogin, (req, res) => {
   if (req.query.status) {
     console.log("-getEmployeesByStatus called"); // test //
     dataService.getEmployeesByStatus(req.query.status)
@@ -150,7 +179,7 @@ app.get("/employees", (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to /employee/value
-app.get("/employee/:empNum", (req, res) => {
+app.get("/employee/:empNum", ensureLogin, (req, res) => {
 
   // initialize an empty object to store the values
   let viewData = {};
@@ -190,7 +219,7 @@ app.get("/employee/:empNum", (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to post /employee/update
-app.post("/employee/update", (req, res) => {
+app.post("/employee/update", ensureLogin, (req, res) => {
   console.log(req.body);
   console.log("-updateEmployee resolved"); // test //
   dataService.updateEmployee(req.body)
@@ -202,7 +231,7 @@ app.post("/employee/update", (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to /managers
-app.get("/managers", (req, res) => {
+app.get("/managers", ensureLogin, (req, res) => {
   console.log("-getManagers called"); // test //
   dataService.getManagers()
     .then((data) => {
@@ -221,7 +250,7 @@ app.get("/managers", (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to /departments
-app.get("/departments", (req, res) => {
+app.get("/departments", ensureLogin, (req, res) => {
   console.log("-getDepartments called"); // test //
   dataService.getDepartments()
     .then((data) => {
@@ -240,7 +269,7 @@ app.get("/departments", (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to /employees/add
-app.get("/employees/add", (req, res) => {
+app.get("/employees/add", ensureLogin, (req, res) => {
   console.log("-addEmployee called"); // test //
   dataService.getDepartments()
     .then((data) => {
@@ -255,7 +284,7 @@ app.get("/employees/add", (req, res) => {
 });
 
 // setup route to post new employee
-app.post("/employees/add", (req, res) => {
+app.post("/employees/add", ensureLogin, (req, res) => {
   console.log(req.body);
   dataService.addEmployee(req.body)
     .then(res.redirect("/employees"));
@@ -266,13 +295,13 @@ app.post("/employees/add", (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to /departments/add
-app.get("/departments/add", (req, res) => {
+app.get("/departments/add", ensureLogin, (req, res) => {
   console.log("-addDepartment called"); // test //
   res.render("addDepartment");
 });
 
 // setup route to post new department
-app.post("/departments/add", (req, res) => {
+app.post("/departments/add", ensureLogin, (req, res) => {
   console.log(req.body);
   dataService.addDepartment(req.body)
     .then(res.redirect("/departments"));
@@ -283,7 +312,7 @@ app.post("/departments/add", (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to post /department/update
-app.post("/department/update", (req, res) => {
+app.post("/department/update", ensureLogin, (req, res) => {
   console.log(req.body);
   console.log("-updateDepartment resolved"); // test //
   dataService.updateDepartment(req.body)
@@ -295,7 +324,7 @@ app.post("/department/update", (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////
 
 // setup route to /department/value
-app.get("/department/:dptId", (req, res) => {
+app.get("/department/:dptId", ensureLogin, (req, res) => {
   console.log("-getDepartmentById called"); // test //
   dataService.getDepartmentById(req.params.dptId)
     .then((data) => {
@@ -313,7 +342,7 @@ app.get("/department/:dptId", (req, res) => {
 // DELETE EMPLOYEE BY NUMBER
 ////////////////////////////////////////////////////////////////////////////////
 
-app.get("/employee/delete/:empNum", (req, res) => {
+app.get("/employee/delete/:empNum", ensureLogin, (req, res) => {
   console.log("-deleteEmployeeByNum called"); // test //
   dataService.deleteEmployeeByNum(req.params.empNum)
     .then((data) => {
