@@ -27,4 +27,27 @@ module.exports.initialize = function () {
         });
     });
 };
-
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: REGISTER USER
+////////////////////////////////////////////////////////////////////////////////
+module.exports.registerUser = function (userData) {
+    return new Promise(function (resolve, reject) {
+        if(userData.password != userData.password2) {
+            reject("Passwords do not match");
+        } else {
+            let newUser = new User(userData); // create a new user
+            newUser.save((err) => {
+                if(err) {
+                    if(err.code == 11000) {
+                        reject("User Name already taken");
+                    } else {
+                        reject("There was an error create the user " + err);
+                    }
+                } else {
+                    console.log("User saved as '" + newUser.user + "'");
+                    resolve();
+                }
+            })
+        }
+    });
+};
