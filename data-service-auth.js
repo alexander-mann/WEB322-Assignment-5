@@ -59,7 +59,7 @@ module.exports.checkUser = function (userData) {
          User.find({ user : userData.user })
             .exec()
             .then((data) => {
-                if(userData == "") {
+                if(!data) {
                     reject("Unable to find user: " + userData.user);
                 } else if(data[0].password != userData.password) {
                     reject("Incorrect Password for user: " + userData.user);

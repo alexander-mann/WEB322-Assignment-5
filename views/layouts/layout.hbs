@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <title>WEB322 App</title>
@@ -13,7 +12,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
-
 <body>
     <header>
         <div class="container">
@@ -22,7 +20,7 @@
                     <h1 id="title">myApp
                         {{#if session.user}}
                         <span class="pull-right">
-                            <a href="/logout" class="btn btn-primary">&nbsp;&nbsp;&nbsp;Log Out:{{session.user.user}}&nbsp;&nbsp;&nbsp;</a>
+                            <a href="/logout" class="btn btn-primary">&nbsp;&nbsp;&nbsp;Log Out : {{session.user.user}}&nbsp;&nbsp;&nbsp;</a>
                         </span>
                         {{/if}}
                         {{#unless session.user}}

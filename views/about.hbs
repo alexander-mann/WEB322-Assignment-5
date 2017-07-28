@@ -43,7 +43,9 @@
 									<textarea class="form-control" rows="8" id="commentText" name="commentText" type="textarea" placeholder="Comment"></textarea>
 								</div>
 							</div>
-							<input type="submit" class="btn btn-danger pull-right" value="Comment" /><br /><br /><br />
+							<div class="col-md-12">
+							<input type="submit" class="btn btn-danger pull-right" value="&nbsp;&nbsp;&nbsp;Comment&nbsp;&nbsp;&nbsp;" /><br />
+							</div>
 						</div>
 					</form>
 				</div>
@@ -85,7 +87,7 @@
 			{{/each}}
 			<div class="row">
 				<div class="col-md-12">
-					<button class="btn btn-danger btn-sm pull-right" data-toggle="collapse" data-target="#reply-{{_id}}" aria-expanded="false">Reply</button>
+					<button class="btn btn-danger btn-sm pull-right" data-toggle="collapse" data-target="#reply-{{_id}}" aria-expanded="false">&nbsp;&nbsp;&nbsp;Reply&nbsp;&nbsp;&nbsp;</button>
 				</div>
 			</div>
 			<div class="collapse" id="reply-{{_id}}">
@@ -112,7 +114,7 @@
 							<div class="col-md-2 col-md-offset-10">
 								<!-- Hidden value with id for the reply-->
 								<input type="hidden" value="{{_id}}" name="comment_id" />
-								<button type="submit" id="comment" class="btn btn-danger pull-right">Reply</button>
+								<button type="submit" id="comment" class="btn btn-danger pull-right">&nbsp;&nbsp;&nbsp;Reply&nbsp;&nbsp;&nbsp;</button>
 							</div>
 						</div>
 					</div>
@@ -121,4 +123,5 @@
 		</div>
 	</div>
 </div>
+<hr/>
 {{/each}}

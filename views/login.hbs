@@ -18,10 +18,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            {{#if user}}
-                            <input class="form-control" id="username" name="username" type="text" placeholder="User Name" required value="{{user}}" />                            {{else}}
-                            <input class="form-control" id="username" name="username" type="text" placeholder="User Name" required value="{{session.user.user}}"
-                            /> {{/if}}
+                            <input class="form-control" id="user" name="user" type="text" placeholder="User Name" required value="{{user}}"/>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -30,8 +27,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-danger pull-right">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</button><br
-                        />
+                        <button type="submit" class="btn btn-danger pull-right">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</button><br/>
                     </div>
                 </div>
             </form>
