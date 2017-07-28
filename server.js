@@ -1,10 +1,10 @@
 /*********************************************************************************
-* WEB322 – Assignment 06
+* WEB322 – Assignment 07
 * I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
 *
-* Name: Alexander Mann Student ID: 131-632-168 Date: July 21, 2017
+* Name: Alexander Mann Student ID: 131-632-168 Date: July 28, 2017
 *
 * Online (Heroku) Link: https://amann9-project.herokuapp.com/
 *
@@ -20,7 +20,7 @@ const dataService = require("./data-service.js"); // link data-service.js
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const dataServiceComments = require("./data-service-comments.js"); // link to data-service-comments.js
-const cientSessions = require('client-sessions');
+const clientSessions = require('client-sessions');
 const dataServiceAuth = require("./data-service-auth.js"); // link to data-service-auth.js
 var app = express();
 
@@ -129,12 +129,10 @@ app.get("/login", function (req, res) {
 app.post("/login", (req, res) => {
   console.log("-checkUser called"); // test //
   dataServiceAuth.checkUser(req.body)
-    .then((data) => {
+    .then(() => {
       console.log("-checkUser resolved"); // test //
       // add user to the session
-      req.session.user = {
-      username: req.body.user
-      };
+      req.session.user = {user: req.body.user};
       res.redirect('/employees');
     })
     .catch((err) => {

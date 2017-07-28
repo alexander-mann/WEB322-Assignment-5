@@ -2,9 +2,9 @@
 const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 var userSchema = new Schema({
-    "user":  {
-    "type": String,
-    "unique": true
+    "user" :  {
+    "type" : String,
+    "unique" : true
   },
     "password" : String
 });
@@ -44,7 +44,7 @@ module.exports.registerUser = function (userData) {
                         reject("There was an error create the user: " + err);
                     }
                 } else {
-                    console.log("User saved as '" + newUser.user + "'");
+                    console.log("User saved as '" + userData.user + "'");
                     resolve();
                 }
             })
@@ -59,9 +59,9 @@ module.exports.checkUser = function (userData) {
          User.find({ user : userData.user })
             .exec()
             .then((data) => {
-                if(users == "") {
+                if(userData == "") {
                     reject("Unable to find user: " + userData.user);
-                } else if(users[0].password != userData.password) {
+                } else if(data[0].password != userData.password) {
                     reject("Incorrect Password for user: " + userData.user);
                 } else {
                     resolve();
