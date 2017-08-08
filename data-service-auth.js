@@ -1,12 +1,13 @@
 // create user schema
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 let Schema = mongoose.Schema;
 var userSchema = new Schema({
-    "user" :  {
-    "type" : String,
-    "unique" : true
-  },
-    "password" : String
+    "user": {
+        "type": String,
+        "unique": true
+    },
+    "password": String
 });
 
 let User; // to be defined on new connection (see initialize)
@@ -32,23 +33,33 @@ module.exports.initialize = function () {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.registerUser = function (userData) {
     return new Promise(function (resolve, reject) {
-        if(userData.password != userData.password2) {
+        if (userData.password != userData.password2) {
             reject("Passwords do not match");
         } else {
-            let newUser = new User(userData); // create a new user
-            newUser.save((err) => {
-                if(err) {
-                    if(err.code == 11000) {
-                        reject("User Name already taken");
+            bcrypt.genSalt(10, function (err, salt) { // Generate a "salt" using 10 rounds
+                bcrypt.hash(userData.password, salt, function (err, hash) { // encrypt the password: "myPassword123"
+                    if (err) {
+
                     } else {
-                        reject("There was an error create the user: " + err);
+                        userData.password = hash;
+                        let newUser = new User(userData); // create a new user
+                        newUser.save((err) => {
+                            if (err) {
+                                if (err.code == 11000) {
+                                    reject("User Name already taken");
+                                } else {
+                                    reject("There was an error create the user: " + err);
+                                }
+                            } else {
+                                console.log("User saved as '" + userData.user + "'");
+                                resolve();
+                            }
+                        })
                     }
-                } else {
-                    console.log("User saved as '" + userData.user + "'");
-                    resolve();
-                }
-            })
+                });
+            });
         }
+
     });
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,12 +67,12 @@ module.exports.registerUser = function (userData) {
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.checkUser = function (userData) {
     return new Promise(function (resolve, reject) {
-         User.find({ user : userData.user })
+        User.find({ user: userData.user })
             .exec()
             .then((data) => {
-                if(!data) {
+                if (!data) {
                     reject("Unable to find user: " + userData.user);
-                } else if(data[0].password != userData.password) {
+                } else if (data[0].password != userData.password) {
                     reject("Incorrect Password for user: " + userData.user);
                 } else {
                     resolve();
