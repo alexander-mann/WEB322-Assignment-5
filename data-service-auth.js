@@ -48,7 +48,7 @@ module.exports.registerUser = function (userData) {
                                 if (err.code === 11000) {
                                     reject("User Name already taken");
                                 } else {
-                                    reject("There was an error create the user: " + err);
+                                    reject("There was an error creating the user: " + err);
                                 }
                             } else {
                                 console.log("User saved as '" + userData.user + "'");
@@ -72,10 +72,11 @@ module.exports.checkUser = function (userData) {
                 if (!data) {
                     reject("Unable to find user: " + userData.user);
                 }
-                bcrypt.compare(data[0].password, userData.password).then((res) => {
+                console.log("system: " + data[0].password + " / input: " + userData.password) // test
+                bcrypt.compare(userData.password, data[0].password).then((res) => {
                     // res === true if it matches and res === false if it does not match
                     if (res === false) {
-                        reject("Incorrect Password for user: " + userData.user);
+                        reject("Incorrect password for user: " + userData.user);
                     } else {
                         resolve();
                     }

@@ -21,21 +21,24 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 id="title">myApp {{#if session.user}}
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
-                                <span class="glyphicon glyphicon-user"></span> {{session.user.user}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="#" data-toggle="modal" data-target="#profileModal"> <span class="glyphicon glyphicon-user"></span> Profile </a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="/logout"> <span class="glyphicon glyphicon-off"></span> Log Out </a></li>
-                            </ul>
-                        </div>
+                        <span class="pull-right">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true">
+                                    <span class="glyphicon glyphicon-user"></span> {{session.user.user}}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="#" data-toggle="modal" data-target="#profileModal"> <span class="glyphicon glyphicon-user"></span> Profile </a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="/logout"> <span class="glyphicon glyphicon-off"></span> Log Out </a></li>
+                                 </ul>
+                            </div>
+                        </span>
                         {{/if}} {{#unless session.user}}
                         <span class="pull-right">
                             <a class="btn btn-success"href="/login">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</a> 
                             <a class="btn btn-primary"href="/register">&nbsp;&nbsp;&nbsp;Register&nbsp;&nbsp;&nbsp;</a>
-                        </span
+                        </span>
                         {{/unless}}
                     </h1>
                 </div>
