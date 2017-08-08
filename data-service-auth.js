@@ -54,13 +54,12 @@ module.exports.registerUser = function (userData) {
                                 console.log("User saved as '" + userData.user + "'");
                                 resolve();
                             }
-                        })
+                        }) // end .save
                     }
-                });
-            });
+                }); // end .hash
+            }); // end .genSalt
         }
-
-    });
+    }); // end promise
 };
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTION: CHECK USER
@@ -72,14 +71,18 @@ module.exports.checkUser = function (userData) {
             .then((data) => {
                 if (!data) {
                     reject("Unable to find user: " + userData.user);
-                } else if (data[0].password != userData.password) {
-                    reject("Incorrect Password for user: " + userData.user);
-                } else {
-                    resolve();
                 }
-            })
+                bcrypt.compare(data[0].password, userData.password).then((res) => {
+                    // res === true if it matches and res === false if it does not match
+                    if(res === false) {
+                        reject("Incorrect Password for user: " + userData.user);
+                    } else {
+                        resolve();
+                    }
+                }); // end .compare
+            }) // end .then
             .catch((err) => {
                 reject("Unable to find user: " + userData.user);
             });
-    });
+    }); // end promise
 };
