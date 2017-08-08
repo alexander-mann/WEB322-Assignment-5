@@ -53,6 +53,9 @@ app.engine(".hbs", exphbs({
 }));
 app.set("view engine", ".hbs");
 
+// ensure bodyPars middleware will allow .json handling
+app.use(bodyParser.json());
+
 // ensure correct use of the client-sessions middleware
 app.use(clientSessions({
   cookieName: "session", // this is the object name that will be added to 'req'
@@ -62,9 +65,9 @@ app.use(clientSessions({
 }));
 
 // ensure that all templates have access to a "session" object
-app.use(function(req, res, next) {
-res.locals.session = req.session;
-next();
+app.use(function (req, res, next) {
+  res.locals.session = req.session;
+  next();
 });
 
 // check if a user is logged in - if not, redirect to login page
@@ -132,12 +135,12 @@ app.post("/login", (req, res) => {
     .then(() => {
       console.log("-checkUser resolved"); // test //
       // add user to the session
-      req.session.user = {user: req.body.user};
+      req.session.user = { user: req.body.user };
       res.redirect('/employees');
     })
     .catch((err) => {
       console.log("-checkUser rejected"); // test //
-      res.render("login", {errorMessage: err, user: req.body.user});
+      res.render("login", { errorMessage: err, user: req.body.user });
     })
 });
 
@@ -154,12 +157,36 @@ app.post("/register", (req, res) => {
   dataServiceAuth.registerUser(req.body)
     .then(() => {
       console.log("-registerUser resolved"); // test //
-      res.render("register", {successMessage: "User created"});
+      res.render("register", { successMessage: "User created" });
     })
     .catch((err) => {
       console.log("-registerUser rejected"); // test //
-      res.render("register", {errorMessage: err, user: req.body.user});
+      res.render("register", { errorMessage: err, user: req.body.user });
     });
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// UPDATE PASSWORD
+////////////////////////////////////////////////////////////////////////////////
+
+app.post("/api/updatePassword", (req, res) => {
+  console.log("-updatePassword called"); // test //
+  dataServiceAuth.checkUser({ user: req.body.user, password: req.body.currentPassword })
+    .then(() => {
+      dataServiceAuth.updatePassword(req.body)
+        .then(() => {
+          console.log("-updatePassword resolved"); // test //
+          res.render("api/updatePassword", { successMessage: "Password changed successfully for user: ", user: req.body.user });
+        })
+        .catch((err) => {
+          console.log("-updatePassword rejected"); // test //
+          res.render("api/updatePassword", { errorMessage: err, user: req.body.user });
+        }); // end .updatePassword
+    })
+    .catch((err) => {
+        console.log("-updatePassword rejected"); // test //
+        res.render("api/updatePassword", { errorMessage: err});
+    }); // end .checkUser
 });
 
 ////////////////////////////////////////////////////////////////////////////////

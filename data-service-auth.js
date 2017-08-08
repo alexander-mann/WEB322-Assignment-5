@@ -39,13 +39,13 @@ module.exports.registerUser = function (userData) {
             bcrypt.genSalt(10, function (err, salt) { // Generate a "salt" using 10 rounds
                 bcrypt.hash(userData.password, salt, function (err, hash) { // encrypt the password: "myPassword123"
                     if (err) {
-
+                        reject("There was an error encrypting the password");
                     } else {
                         userData.password = hash;
                         let newUser = new User(userData); // create a new user
                         newUser.save((err) => {
                             if (err) {
-                                if (err.code == 11000) {
+                                if (err.code === 11000) {
                                     reject("User Name already taken");
                                 } else {
                                     reject("There was an error create the user: " + err);
@@ -74,7 +74,7 @@ module.exports.checkUser = function (userData) {
                 }
                 bcrypt.compare(data[0].password, userData.password).then((res) => {
                     // res === true if it matches and res === false if it does not match
-                    if(res === false) {
+                    if (res === false) {
                         reject("Incorrect Password for user: " + userData.user);
                     } else {
                         resolve();
@@ -84,5 +84,32 @@ module.exports.checkUser = function (userData) {
             .catch((err) => {
                 reject("Unable to find user: " + userData.user);
             });
+    }); // end promise
+};
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTION: UPDATE PASSWORD
+////////////////////////////////////////////////////////////////////////////////
+module.exports.updatePassword = function (userData) {
+    return new Promise(function (resolve, reject) {
+        if (userData.password != userData.password2) {
+            reject("Passwords do not match");
+        } else {
+            bcrypt.genSalt(10, function (err, salt) { // Generate a "salt" using 10 rounds
+                bcrypt.hash(userData.password, salt, function (err, hash) { // encrypt the password: "myPassword123"
+                    if (err) {
+                        reject("There was an error encrypting the password");
+                    } else {
+                        User.update({ user: userData.user },
+                            { $set: { password: hash } },
+                            { multi: false })
+                            .exec()
+                            .then(resolve())
+                            .catch(
+                                reject("There was an error updating the password for " + userData.user)
+                            );
+                    }
+                }); // end .hash
+            }); // end .genSalt
+        }
     }); // end promise
 };
