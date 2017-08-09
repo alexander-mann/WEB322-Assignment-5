@@ -174,9 +174,10 @@ app.post("/api/updatePassword", (req, res) => {
   dataServiceAuth.checkUser({ user: req.body.user, password: req.body.currentPassword })
     .then(() => {
       dataServiceAuth.updatePassword(req.body)
-        .then(() => {
+        .then((data) => {
           console.log("-updatePassword resolved"); // test //
-          res.render("api/updatePassword", { successMessage: "Password changed successfully for user: ", user: req.body.user });
+          //res.render("api/updatePassword", { successMessage: "Password changed successfully for user: ", user: req.body.user });
+          res.json({ successMessage: data });
         })
         .catch((err) => {
           console.log("-updatePassword rejected"); // test //
@@ -185,7 +186,7 @@ app.post("/api/updatePassword", (req, res) => {
     })
     .catch((err) => {
         console.log("-updatePassword rejected"); // test //
-        res.render("api/updatePassword", { errorMessage: err});
+        res.render("api/updatePassword", { errorMessage: err });
     }); // end .checkUser
 });
 
