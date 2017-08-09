@@ -72,7 +72,7 @@ module.exports.checkUser = function (userData) {
                 if (!data) {
                     reject("Unable to find user: " + userData.user);
                 }
-                console.log("system: " + data[0].password + " / input: " + userData.password) // test
+                //console.log("system: " + data[0].password + " / input: " + userData.password) // test
                 bcrypt.compare(userData.password, data[0].password).then((res) => {
                     // res === true if it matches and res === false if it does not match
                     if (res === false) {

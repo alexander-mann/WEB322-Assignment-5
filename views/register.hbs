@@ -15,8 +15,8 @@
             <div class="alert alert-success">
                 <strong>Success:</strong> {{successMessage}}
             </div>
-            <a class="btn btn-success pull-right" href="/login">&nbsp;&nbsp;&nbsp;Proceed to Login&nbsp;&nbsp;&nbsp;</a><br
-            /><br /><br />
+            <a class="btn btn-success pull-right" href="/login">&nbsp;&nbsp;&nbsp;Proceed to Login&nbsp;&nbsp;&nbsp;</a>
+            <br /><br /><br />
         </div>
         {{else}}
         <div class="well">
@@ -25,9 +25,10 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             {{#if user}}
-                            <input class="form-control" id="user" name="user" type="text" placeholder="User Name" required value="{{user}}" />                            {{else}}
-                            <input class="form-control" id="user" name="user" type="text" placeholder="User Name" required value="{{session.user.user}}"
-                            /> {{/if}}
+                            <input class="form-control" id="user" name="user" type="text" placeholder="User Name" required value="{{user}}" />                            
+                            {{else}}
+                            <input class="form-control" id="user" name="user" type="text" placeholder="User Name" required value="{{session.user.user}}"/> 
+                            {{/if}}
                         </div>
                     </div>
                     <div class="col-md-12">

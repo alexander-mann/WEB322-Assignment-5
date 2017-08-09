@@ -28,17 +28,17 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                    <li><a href="#" data-toggle="modal" data-target="#profileModal"> <span class="glyphicon glyphicon-user"></span> Profile </a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="/logout"> <span class="glyphicon glyphicon-off"></span> Log Out </a></li>
-                                 </ul>
+                                <li><a href="#" data-toggle="modal" data-target="#profileModal"> <span class="glyphicon glyphicon-user"></span> Profile </a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/logout"> <span class="glyphicon glyphicon-off"></span> Log Out </a></li>
+                                </ul>
                             </div>
                         </span>
                         {{/if}} {{#unless session.user}}
                         <span class="pull-right">
                             <a class="btn btn-success"href="/login">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;</a> 
                             <a class="btn btn-primary"href="/register">&nbsp;&nbsp;&nbsp;Register&nbsp;&nbsp;&nbsp;</a>
-                        </span>
+                        </span> 
                         {{/unless}}
                     </h1>
                 </div>
@@ -76,6 +76,61 @@
             </div>
         </div>
     </footer>
+    {{#if session.user}}
+    <!-- Profile Modal -->
+    <div class="modal" id="profileModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="profileModalTitle">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form onsubmit="requestPasswordChange('{{session.user.user}}'); return false;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span ariahidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="profileModalTitle">Profile</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="username">Username:</label>
+                                    <input class="form-control" id="username" type="text" value="{{session.user.user}}" disabled />
+                                </div>    
+                            </div>
+                            <div class="col-md-12">
+                                <label for="currentPassword">Update Password:</label>
+                                <div class="form-group">
+                                    <input class="passwordReset form-control" id="currentPassword" type="password" placeholder="Current Password" />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input class="passwordReset form-control" id="password" type="password" placeholder="New Password" />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input class="passwordReset form-control" id="password2" type="password" placeholder="Confirm Password" />
+                                </div>
+                            </div>
+                            <div class="col-md-12 hide" id="passwordChangeError">
+                                <div class="form-group">
+                                    <div class="alert alert-danger">{{errorMessage}}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 hide" id="passwordChangeSuccess">
+                                <div class="form-group">
+                                    <div class="alert alert-success">{{successMessage}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{/if}}
 </body>
 
 </html>
