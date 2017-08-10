@@ -104,7 +104,9 @@ module.exports.updatePassword = function (userData) {
                             { $set: { password: hash } },
                             { multi: false })
                             .exec()
-                            .then(resolve("Success" + userData.user))
+                            .then(
+                                resolve("Password changed successfully for user: " + userData.user)
+                            )
                             .catch(
                                 reject("There was an error updating the password for " + userData.user)
                             );

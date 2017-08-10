@@ -172,21 +172,23 @@ app.post("/register", (req, res) => {
 app.post("/api/updatePassword", (req, res) => {
   console.log("-updatePassword called"); // test //
   dataServiceAuth.checkUser({ user: req.body.user, password: req.body.currentPassword })
-    .then((data) => {
+    .then(() => {
       dataServiceAuth.updatePassword(req.body)
         .then((data) => {
-          console.log("-updatePassword resolved - " + data); // test //
-          //res.render("api/updatePassword", { successMessage: "Password changed successfully for user: ", user: req.body.user });
+          console.log("-updatePassword resolved"); // test //
+          //console.log(data); // test
           res.json({ successMessage: data });
         })
         .catch((err) => {
-          console.log("-updatePassword rejected - " + data); // test //
-          //res.render("api/updatePassword", { errorMessage: err, user: req.body.user });
+          console.log("-updatePassword rejected"); // test //
+          //console.log(err); // test
+          res.json({ errorMessage: err });
         }); // end .updatePassword
     })
     .catch((err) => {
-        console.log("-updatePassword rejected - " + data); // test //
-        //res.render("api/updatePassword", { errorMessage: err });
+        console.log("-updatePassword rejected"); // test //
+        //console.log(err); // test
+        res.json({ errorMessage: err });
     }); // end .checkUser
 });
 
