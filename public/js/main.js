@@ -15,6 +15,7 @@ function requestPasswordChange(username) {
         contentType: "application/json"
     })
         .done(function (data) {
+            console.log(data.successMessage);
             hidePasswordMessages();
             if (data.successMessage) {
                 $("#passwordChangeSuccess").removeClass("hide").children(".alert").text(data.successMessage);
