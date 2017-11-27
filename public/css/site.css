@@ -20,6 +20,10 @@ header{
     color: whitesmoke;
 }
 
+h1 {
+    font-size: 50px;
+}
+
 nav{
     padding:8px;
     background: linear-gradient(gold, yellow);
