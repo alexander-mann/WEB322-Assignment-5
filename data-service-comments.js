@@ -17,7 +17,7 @@ let Comment; // to be defined on new connection (see initialize)
 ////////////////////////////////////////////////////////////////////////////////
 module.exports.initialize = function () {
     return new Promise(function (resolve, reject) {
-        let db = mongoose.createConnection("mongodb://amann:seneca@ds161162.mlab.com:61162/amann9_web322_a6");
+        let db = mongoose.createConnection("mongodb://URL");
 
         db.on('error', (err) => {
             reject(err); // reject the promise with the provided error
